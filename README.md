@@ -1,1 +1,1 @@
-# aminishell
+# minishell
