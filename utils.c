@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 22:30:37 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/16 22:52:59 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ char			check_quote(char *line)
 {
 	char		result;
 	int			i;
+	int			spc_flag;
 
 	result = 0;
 	i = 0;
+	spc_flag = 0;
 	while (line[i] != '\0')
 	{
+		if(spc_flag == 0 && line[i] == ' ' && result != 0)
+			return -1;
+		if(line[i] == ' ')
+			spc_flag++;
 		if (line[i] == '"' && (result == 0 || result == '"'))
 		{
 			if (result == '"')
