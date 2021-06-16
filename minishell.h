@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 17:36:10 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/16 18:10:18 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ typedef struct	s_cmd
 void				parse(t_cmd **cmd_list, char *line);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote);
 char				check_quote(char *line);
+void				exec(t_cmd *cmd_list, char *argv[], char *envp[]);
 void				ft_cd(char *string);
+
 #endif
