@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 16:30:03 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/16 22:18:35 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,19 @@ char			check_quote(char *line)
 	i = 0;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '"')
+		if (line[i] == '"' && (result == 0 || result == '"'))
 		{
 			if (result == '"')
+				result = 0; //i 인덱스 " 없애 줘야함.
+			else
+				result = '"';//i 인덱스 " 없애 줘야함.
+		}
+		if (line[i] == '\'' && (result == 0 || result == '\''))
+		{
+			if (result == '\'')
 				result = 0;
 			else
-				result = '"';
+				result = '\'';
 		}
 		i++;
 	}
