@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 20:22:11 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/16 19:18:50 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/16 20:06:26 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int main(void)
 {
-	pritnf("hello world\n");
+	pritnf("hello 42\n");
+
 	return (0);
 }
