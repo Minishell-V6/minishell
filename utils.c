@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 17:34:56 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/17 22:24:20 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			str_forward(char *line, int *i)
 	int j;
 
 	j = 0;
-	while(line[(*i) + j + 1])
+	while(line[(*i) + j])
 	{
 		line[(*i) + j] = line[(*i) + j + 1];
 		j++;
