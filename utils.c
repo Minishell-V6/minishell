@@ -18,9 +18,13 @@ t_cmd			*ft_new(char *line, int pipe_flag, char quote)
 
 	if (!(result = (t_cmd*)malloc(sizeof(t_cmd))))
 		return (NULL);
+	if (!(result->err_manage = malloc(sizeof(t_err))))
+		return (NULL);
 	result->cmdline = ft_split(line, ' ');
 	result->pipe_flag = pipe_flag;
 	result->quote = quote;
+	result->err_manage->errcode = 0;
+	result->err_manage->errindex = 0;
 	result->next = NULL;
 	return (result);
 }

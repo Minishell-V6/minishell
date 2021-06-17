@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 19:35:44 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/17 16:54:36 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,29 @@
 # include <readline/history.h>
 # include <errno.h>
 
-
-
-
 # include <stdio.h>
+
+typedef struct	s_err
+{
+	int				errcode;
+	int				errindex;
+}				t_err;
 
 typedef struct	s_cmd
 {
 	char			**cmdline;
 	int				pipe_flag;
 	char			quote;
+	struct s_err	*err_manage;
 	struct s_cmd	*next;
 }				t_cmd;
 
 void				parse(t_cmd **cmd_list, char *line);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote);
 char				check_quote(char *line);
-void				exec(t_cmd *cmd_list, char *argv[], char *envp[]);
+int					exec(t_cmd *cmd_list, char *argv[], char *envp[]);
 int					ft_cd(char *string);
+int					ft_exit(t_cmd *cmd_list);
+void				print_errstr(t_cmd *cmd_list);
 
 #endif
