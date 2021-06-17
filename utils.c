@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 22:52:59 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/17 17:28:33 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@ t_cmd			*ft_new(char *line, int pipe_flag, char quote)
 
 	if (!(result = (t_cmd*)malloc(sizeof(t_cmd))))
 		return (NULL);
+	if (!(result->err_manage = malloc(sizeof(t_err))))
+		return (NULL);
 	result->cmdline = ft_split(line, ' ');
 	result->pipe_flag = pipe_flag;
 	result->quote = quote;
+	result->err_manage->errcode = 0;
+	result->err_manage->errindex = 0;
 	result->next = NULL;
 	return (result);
 }
@@ -36,9 +40,9 @@ char			check_quote(char *line)
 	spc_flag = 0;
 	while (line[i] != '\0')
 	{
-		if(spc_flag == 0 && line[i] == ' ' && result != 0)
-			return -1;
-		if(line[i] == ' ')
+		if (spc_flag == 0 && line[i] == ' ' && result != 0)
+			return (-1);
+		if (line[i] == ' ')
 			spc_flag++;
 		if (line[i] == '"' && (result == 0 || result == '"'))
 		{
