@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 18:38:01 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/17 16:51:22 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void			exec(t_cmd *cmd_list, char *argv[], char *envp[])
 		ft_cd(cmd_list->cmdline[1]);
 	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
 		exit(0); // need free function
+	else if (ft_strncmp("env", cmd_list->cmdline[0], 4) == 0)
+		ft_env(envp);
+	else if (ft_strncmp("export", cmd_list->cmdline[0], 7) == 0)
+		ft_export(cmd_list, envp);
 	else if (non_builtin(cmd_list, argv, envp) == 0)
 		ft_putstr_fd("command not found\n", 1);
 }
