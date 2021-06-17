@@ -37,9 +37,17 @@ typedef struct	s_cmd
 void				parse(t_cmd **cmd_list, char *line);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote);
 char				check_quote(char *line);
-void				exec(t_cmd *cmd_list, char *argv[], char *envp[]);
+void				exec(t_cmd *cmd_list, char *argv[], char **envp[]);
 int					ft_cd(char *string);
-void				ft_env(char **envp);
-void				ft_export(t_cmd *cmd_list, char **envp);
 
+// env
+void				ft_env(char **envp);
+char				**copy_envp(char **envs);
+//export
+void				print_envp(char **envp);
+int					isvalid_export(char *line);
+void				remove_char(char *str, char c);
+int					cnt_envp_row(char **envp);
+void				ft_export(t_cmd *cmd_list, char ***envp);
+int					add_envp(t_cmd *cmd_list, char ***envp);
 #endif

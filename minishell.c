@@ -12,20 +12,18 @@
 
 #include "minishell.h"
 
-// char	**g_envp = NULL;
-
 int				main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
 	t_cmd		*cmd_list;
+	char		**cpenv;
 
 	argc = 1;
-	// g_envp = envp;
-	envp[0] = "Hello";
+	cpenv = copy_envp(envp);
 	while ((line = readline("minishell $ ")) != NULL)
 	{
 		parse(&cmd_list, line);
-		exec(cmd_list, argv, envp);
+		exec(cmd_list, argv, &cpenv);
 	}
 	add_history(line);
 	return (0);

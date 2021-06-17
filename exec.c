@@ -48,7 +48,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
 	return (0);
 }
 
-void			exec(t_cmd *cmd_list, char *argv[], char *envp[])
+void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 {
 	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
 		printf("%s\n", getcwd(NULL, 0));
@@ -57,9 +57,10 @@ void			exec(t_cmd *cmd_list, char *argv[], char *envp[])
 	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
 		exit(0); // need free function
 	else if (ft_strncmp("env", cmd_list->cmdline[0], 4) == 0)
-		ft_env(envp);
+		ft_env(*envp);
 	else if (ft_strncmp("export", cmd_list->cmdline[0], 7) == 0)
 		ft_export(cmd_list, envp);
-	else if (non_builtin(cmd_list, argv, envp) == 0)
-		ft_putstr_fd("command not found\n", 1);
+	// else if (non_builtin(cmd_list, argv, envp) == 0)
+	// 	ft_putstr_fd("command not found\n", 1);
+	argv = 0;
 }
