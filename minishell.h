@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 19:35:44 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/17 14:36:17 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_cmd				*ft_new(char *line, int pipe_flag, char quote);
 char				check_quote(char *line);
 void				exec(t_cmd *cmd_list, char *argv[], char *envp[]);
 int					ft_cd(char *string);
+void				ft_env(char **envp);
+void				ft_export(t_cmd *cmd_list, char **line);
 
 #endif
