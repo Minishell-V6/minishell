@@ -28,6 +28,8 @@ void	print_envp(char **envp)
 int		isvalid_export(char *line){
 	char **str;
 
+	if (!line)
+		return 0;
 	if (line[0] >= '0' && line[0] <= '9')
 		return 0;
 	str = ft_split(line, '=');
@@ -91,7 +93,13 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 
 	i = 0;
 	if (cmd_list->cmdline[1])
-		error = add_envp(cmd_list, envp);
+	{
+		if (isvalid_export(cmd_list->cmdline[1]))
+		{
+			remove_char(cmd_list->cmdline[1], '\\');
+			error = add_envp(cmd_list, envp);
+		}
+	}
 	else
 		print_envp(*envp);
 }
