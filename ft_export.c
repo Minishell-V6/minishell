@@ -12,14 +12,61 @@
 
 #include "minishell.h"
 
-void	print_envp(char **envp)
+char	**sort_env(char **envp)
+{
+	int	i;
+	int j;
+	char **new;
+	char *temp;
+
+	new = copy_envp(envp);
+	i = 0;
+	while (new[i])
+	{
+		j = i + 1;
+		while(new[j])
+		{
+			if (ft_strncmp(new[i], new[j], ft_strlen(new[i])) > 0)
+			{
+				temp = new[i];
+				new[i] = new[j];
+				new[j] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return new;
+}
+void	print_quote(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i] != '=')
+	{
+		i++;
+	} 
+	i++;
+	write(1, str, i);
+	write(1, "\"", 1);
+	write(1, str+i, ft_strlen(str+i));
+	write(1, "\"",1);
+}
+
+
+void	print_export(char **envp)
 {
 	int	i;
 	
 	i = 0;
-	while (envp[i])
+	char **sorted;
+	
+	sorted = sort_env(envp);
+	while (sorted[i])
 	{
-		ft_putstr_fd(envp[i], STDOUT);
+		ft_putstr_fd("declare -x ", STDOUT);
+		print_quote(sorted[i]);
 		ft_putchar_fd('\n', STDOUT);
 		i++;
 	}
@@ -64,6 +111,24 @@ int		cnt_envp_row(char **envp)
 	return row;
 }
 
+int		check_key(char **envp, char *line)
+{
+	int i;
+	int key;
+
+	i = 0;
+	key = 0;
+	while (line[key] != '=')
+		key++;
+	while(envp[i])
+	{
+		if(ft_strncmp(envp[i], line, key) == 0)
+			return i;
+		i++;
+	}
+	return -1;
+}
+
 int		add_envp(t_cmd *cmd_list, char ***envp)
 {
 	char** new;
@@ -90,6 +155,7 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 {
 	int	i;
 	int error;
+	int keyindex;
 
 	i = 0;
 	if (cmd_list->cmdline[1])
@@ -97,10 +163,17 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 		if (isvalid_export(cmd_list->cmdline[1]))
 		{
 			remove_char(cmd_list->cmdline[1], '\\');
-			error = add_envp(cmd_list, envp);
+			// 이미 key가 존재하는 경우
+			if ((keyindex = check_key(*envp, cmd_list->cmdline[1])) >= 0)
+			{
+				free((*envp)[keyindex]);
+				(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1]);
+			}
+			else
+				error = add_envp(cmd_list, envp);
 		}
 	}
 	else
-		print_envp(*envp);
+		print_export(*envp);
 }
 

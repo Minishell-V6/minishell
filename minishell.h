@@ -44,10 +44,13 @@ int					ft_cd(char *string);
 void				ft_env(char **envp);
 char				**copy_envp(char **envs);
 //export
-void				print_envp(char **envp);
+void				print_export(char **envp);
 int					isvalid_export(char *line);
 void				remove_char(char *str, char c);
 int					cnt_envp_row(char **envp);
 void				ft_export(t_cmd *cmd_list, char ***envp);
 int					add_envp(t_cmd *cmd_list, char ***envp);
+char				**sort_env(char **envp);
+void				print_quote(char *str);
+int					check_key(char **envp, char *line);
 #endif
