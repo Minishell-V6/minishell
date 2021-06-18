@@ -1,0 +1,7 @@
+-n
+cd fmsdkm
+cd ; pwd
+cd .. ; pwd
+cd . ; pwd
+cd /Users ; pwd
+cd ; pwd
