@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 17:28:29 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/19 11:47:14 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ int				main(int argc, char *argv[], char *envp[])
 	argc = 1;
 	while ((line = readline("minishell $ ")) != NULL)
 	{
-		parse(&cmd_list, line);
-		if (exec(cmd_list, argv, envp) == -1)
-			print_errstr(cmd_list);
-		add_history(line);
+		if (*line != '\0')
+		{
+			parse(&cmd_list, line);
+			if (exec(cmd_list, argv, envp) == -1)
+				print_errstr(cmd_list);
+			free_all(cmd_list);
+			add_history(line);
+		}
+		free(line);
 	}
 	return (0);
 }

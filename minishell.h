@@ -6,14 +6,13 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 16:54:36 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/19 11:36:03 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./get_next_line/get_next_line.h"
 # include "./libft/libft.h"
 # include <stdlib.h>
 # include <readline/readline.h>
@@ -44,5 +43,6 @@ int					exec(t_cmd *cmd_list, char *argv[], char *envp[]);
 int					ft_cd(char *string);
 int					ft_exit(t_cmd *cmd_list);
 void				print_errstr(t_cmd *cmd_list);
+void				free_all(t_cmd *cmd_list);
 
 #endif
