@@ -30,7 +30,7 @@ void        ft_echo(char **commands, char *envp[])
     while (commands[i])
     {
         ft_putstr_fd(commands[i], 1);
-        ++i;
+        i++;
     }
     if (flg == 0)
         write(1, "\n", 1);
