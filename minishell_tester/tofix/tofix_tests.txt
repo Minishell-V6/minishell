@@ -1,7 +1,30 @@
 -n
-cd fmsdkm
-cd ; pwd
-cd .. ; pwd
-cd . ; pwd
-cd /Users ; pwd
-cd ; pwd
+env | grep "_="
+env | grep "SHLVL"
+echo oui | cat -e
+echo oui | echo non | echo something | grep oui
+echo oui | echo non | echo something | grep non
+echo oui | echo non | echo something | grep something
+pwd ; cd .. | echo "something"
+pwd ; cd .. | echo "something" ; pwd
+pwd ; cd / | echo "something" ; pwd
+ifconfig | grep ":"
+ifconfig | grep nothing
+whoami | grep $USER
+whoami | grep $USER > tmp/file; cat tmp/file
+whoami | cat -e | cat -e > tmp/file ; cat tmp/file ; echo $USER
+cat Makefile | grep "FLAGS"
+echo test | cat -e | cat -e | cat -e
+echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+ls -la | grep "."
+whereis grep > tmp/file ; cat tmp/file ; ls -la tmp/file | grep "grep"
+whereis grep > tmp/file ; cat tmp/file ; ls -la tmp/file
+ls -la > tmp/file ; cat < tmp/file tmp/doesntexist 2>/dev/null
+ls -la > tmp/file ; cat < tmp/file tmp/doesntexist
+;; test
+| test
+echo > <
+echo | |
+<
+;
+|
