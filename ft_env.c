@@ -12,15 +12,18 @@
 
 #include "minishell.h"
 
-void	ft_env(char **envp) // 환경변수 목록 출력하는 함수
+void	ft_env(char **envp)
 {
 	int	i;
-	
+
 	i = 0;
 	while (envp[i])
 	{
+		if (haveequal(envp[i]))
+		{
 			ft_putstr_fd(envp[i], STDOUT);
 			ft_putchar_fd('\n', STDOUT);
+		}
 			i++;
 	}
 }

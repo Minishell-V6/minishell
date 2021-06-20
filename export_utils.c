@@ -54,14 +54,21 @@ int		cnt_envp_row(char **envp)
 }
 
 int		isvalid_export(char *line){
-	char **str;
 
-	if (!line)
-		return 0;
 	if (line[0] >= '0' && line[0] <= '9')
 		return 0;
-	str = ft_split(line, '=');
-	if (ft_strlen(str[0]) == 0 || ft_strlen(str[1]) == 0)
-		return 0;
 	return 1;
+}
+
+int		haveequal(char *line){
+	int i;
+
+	i = 0;
+	while(line[i])
+	{
+		if(line[i] == '=')
+			return 1;
+		i++;
+	}
+	return 0;
 }

@@ -53,4 +53,5 @@ int					add_envp(t_cmd *cmd_list, char ***envp);
 char				**sort_env(char **envp);
 void				print_quote(char *str);
 int					check_key(char **envp, char *line);
+int					haveequal(char *line);
 #endif

@@ -17,25 +17,32 @@ void	print_quote(char *str)
 	int i;
 
 	i = 0;
-	while(str[i] != '=')
+	if (haveequal(str))
 	{
-		i++;
-	} 
-	i++;
-	write(1, str, i);
-	write(1, "\"", 1);
-	write(1, str+i, ft_strlen(str+i));
-	write(1, "\"",1);
+		while(str[i] != '=')
+			i++;
+		write(1, str, ++i);
+		write(1, "\"", 1);
+		write(1, str+i, ft_strlen(str+i));
+		write(1, "\"",1);
+	}
+	else
+	{
+		while(str[i])
+			i++;
+		write(1, str, ++i);
+		write(1, "=",1);
+		write(1, "\"\"", 2);
+	}
 }
-
 
 void	print_export(char **envp)
 {
 	int	i;
-	
+
 	i = 0;
 	char **sorted;
-	
+
 	sorted = sort_env(envp);
 	while (sorted[i])
 	{
@@ -44,6 +51,7 @@ void	print_export(char **envp)
 		ft_putchar_fd('\n', STDOUT);
 		i++;
 	}
+	free(sorted);
 }
 
 int		check_key(char **envp, char *line)
@@ -53,8 +61,16 @@ int		check_key(char **envp, char *line)
 
 	i = 0;
 	key = 0;
-	while (line[key] != '=')
-		key++;
+	if (haveequal(line))
+	{
+		while (line[key] != '=')
+			key++;
+	}
+	else
+	{
+		while (line[key])
+			key++;
+	}
 	while(envp[i])
 	{
 		if(ft_strncmp(envp[i], line, key) == 0)
@@ -66,9 +82,9 @@ int		check_key(char **envp, char *line)
 
 int		add_envp(t_cmd *cmd_list, char ***envp)
 {
-	char** new;
-	int row;
-	int i;
+	char	**new;
+	int		row;
+	int		i;
 
 	i = 0;
 	row = cnt_envp_row(*envp);
@@ -98,15 +114,19 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 		if (isvalid_export(cmd_list->cmdline[1]))
 		{
 			remove_char(cmd_list->cmdline[1], '\\');
-			// 이미 key가 존재하는 경우
 			if ((keyindex = check_key(*envp, cmd_list->cmdline[1])) >= 0)
 			{
-				free((*envp)[keyindex]);
-				(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1]);
+				if (haveequal(cmd_list->cmdline[1]))
+				{
+					free((*envp)[keyindex]);
+					(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1]);
+				}
 			}
 			else
 				error = add_envp(cmd_list, envp);
 		}
+		else
+			printf("key값 에러");//error에 추가해야함.
 	}
 	else
 		print_export(*envp);
