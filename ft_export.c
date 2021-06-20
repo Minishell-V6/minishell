@@ -6,38 +6,12 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/17 16:54:24 by seojeong         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:24:46 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**sort_env(char **envp)
-{
-	int	i;
-	int j;
-	char **new;
-	char *temp;
-
-	new = copy_envp(envp);
-	i = 0;
-	while (new[i])
-	{
-		j = i + 1;
-		while(new[j])
-		{
-			if (ft_strncmp(new[i], new[j], ft_strlen(new[i])) > 0)
-			{
-				temp = new[i];
-				new[i] = new[j];
-				new[j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return new;
-}
 void	print_quote(char *str)
 {
 	int i;
@@ -70,45 +44,6 @@ void	print_export(char **envp)
 		ft_putchar_fd('\n', STDOUT);
 		i++;
 	}
-}
-
-int		isvalid_export(char *line){
-	char **str;
-
-	if (!line)
-		return 0;
-	if (line[0] >= '0' && line[0] <= '9')
-		return 0;
-	str = ft_split(line, '=');
-	if (ft_strlen(str[0]) == 0 || ft_strlen(str[1]) == 0)
-		return 0;
-	return 1;
-}
-
-void	remove_char(char *str, char c)
-{
-	int		new;
-	int		i;
-
-	new = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != c)
-			str[new++] = str[i];
-		i++;
-	}
-	str[new] = 0;
-}
-
-int		cnt_envp_row(char **envp)
-{
-	int row;
-
-	row = 0;
-	while(envp[row])
-		row++;
-	return row;
 }
 
 int		check_key(char **envp, char *line)
@@ -176,4 +111,3 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 	else
 		print_export(*envp);
 }
-
