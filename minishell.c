@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 16:32:48 by seojeong         ###   ########.fr       */
+/*   Updated: 2021/06/19 11:47:14 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ int				main(int argc, char *argv[], char *envp[])
 	cpenv = copy_envp(envp);
 	while ((line = readline("minishell $ ")) != NULL)
 	{
-		parse(&cmd_list, line);
-		exec(cmd_list, argv, &cpenv);
+		if (*line != '\0')
+		{
+			parse(&cmd_list, line);
+			if (exec(cmd_list, argv, envp) == -1)
+				print_errstr(cmd_list);
+			free_all(cmd_list);
+			add_history(line);
+		}
+		free(line);
 	}
-	add_history(line);
 	return (0);
 }

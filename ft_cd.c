@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:37:25 by hoylee            #+#    #+#             */
-/*   Updated: 2021/06/16 18:36:20 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/17 13:20:44 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int		ft_cd(char *string)
 {
 	int i;
 	char *pst_buffer;	
-	//char **str_arr;
-	//char *str_pwd;
 
 	i = 0;
 	if (string == 0 || string[0] == 0)
@@ -41,9 +39,3 @@ int		ft_cd(char *string)
 	}
 	return (0);
 }
-
-//int main(void)
-//{
-//	ft_cd("we/sd");
-//	return (0);
-//}

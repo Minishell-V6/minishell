@@ -6,7 +6,7 @@
 /*   By: djeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 21:12:18 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/03 01:10:53 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/19 11:28:22 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n)
 	t1 = (unsigned char *)s1;
 	t2 = (unsigned char *)s2;
 	i = 0;
+	if (t1 == NULL || t2 == NULL)
+		return (-1);
 	while (t1[i] != '\0' && t2[i] != '\0' && i < n)
 	{
 		if (t1[i] != t2[i])
