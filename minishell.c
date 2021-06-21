@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/19 11:47:14 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/21 14:44:37 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				main(int argc, char *argv[], char *envp[])
 		if (*line != '\0')
 		{
 			parse(&cmd_list, line);
-			if (exec(cmd_list, argv, envp) == -1)
+			if (exec(cmd_list, argv, &envp) == -1)
 				print_errstr(cmd_list);
 			free_all(cmd_list);
 			add_history(line);

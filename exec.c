@@ -6,13 +6,13 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/19 11:27:34 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/21 14:46:36 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
+int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 {
 	char		*path;
 	int			status;
@@ -61,7 +61,7 @@ int     exec(t_cmd *cmd_list, char *argv[], char **envp[])
 		ft_env(*envp);
 	else if (ft_strncmp("export", cmd_list->cmdline[0], 7) == 0)
 		ft_export(cmd_list, envp);
-	else if (non_builtin(cmd_list, argv, envp) == 0)
+	else if (non_builtin(cmd_list, argv, *envp) == 0)
 		return (-1);
 	return (0);
 }
