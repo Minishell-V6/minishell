@@ -24,7 +24,7 @@ void	ft_env(char **envp)
 			ft_putstr_fd(envp[i], STDOUT);
 			ft_putchar_fd('\n', STDOUT);
 		}
-			i++;
+		i++;
 	}
 }
 
