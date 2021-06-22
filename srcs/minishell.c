@@ -25,7 +25,7 @@ int				main(int argc, char *argv[], char *envp[])
 		if (*line != '\0')
 		{
 			parse(&cmd_list, line);
-			if (exec(cmd_list, argv, &envp) == -1)
+			if (exec(cmd_list, argv, &cpenv) == -1)
 				print_errstr(cmd_list);
 			free_all(cmd_list);
 			add_history(line);
