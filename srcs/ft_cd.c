@@ -6,11 +6,11 @@
 /*   By: hoylee <hoylee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:37:25 by hoylee            #+#    #+#             */
-/*   Updated: 2021/06/17 13:20:44 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/22 12:16:22 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int		ft_cd(char *string)
 {

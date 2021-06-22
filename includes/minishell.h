@@ -6,14 +6,14 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/19 11:36:03 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/22 12:19:13 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>

@@ -6,11 +6,11 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 16:38:40 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 12:15:40 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void			error_write(char *error_str, char *err_cmdline, char *err_cmdline2)
 {

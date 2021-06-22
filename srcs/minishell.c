@@ -6,11 +6,11 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/21 14:44:37 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/22 12:18:09 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int				main(int argc, char *argv[], char *envp[])
 {

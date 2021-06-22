@@ -6,11 +6,11 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/18 19:24:46 by seojeong         ###   ########.fr       */
+/*   Updated: 2021/06/22 12:17:51 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	print_quote(char *str)
 {

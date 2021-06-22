@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 /*
 	변수명(*key)을 입력하면 값을 반환해주는 함수입니다.

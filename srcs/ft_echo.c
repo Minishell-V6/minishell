@@ -1,5 +1,4 @@
-
-#include "minishell.h"
+#include "../includes/minishell.h"
 //echo의 n옵션 체크함수.
 int         n_opt_chk(char *command)
 {
