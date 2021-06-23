@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/22 12:19:13 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/23 18:14:22 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "../libft/libft.h"
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <errno.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 
 # define STDIN 			0
