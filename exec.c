@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/21 14:39:29 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 17:34:40 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
 		pid = fork();
 		path = "/bin/ps";
 	}
+	else if (ft_strncmp("cat", cmd_list->cmdline[0], 4) == 0)
+	{
+		pid = fork();
+		path = "/bin/cat";
+//		argv[0] = "/bin/cat";
+//		argv[1] = cmd_list->cmdline[1];
+//		argv[2] = NULL;
+	}
 	if (path != NULL && pid == 0)
 	{
 		execve(path, argv, envp);
@@ -49,7 +57,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
 	return (0);
 }
 
-int			exec(t_cmd *cmd_list, char *argv[], char **envp[])
+int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 {
 	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
 		printf("%s\n", getcwd(NULL, 0));
