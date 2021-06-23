@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/19 11:36:03 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/21 15:05:27 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/history.h>
 # include <errno.h>
 # include <stdio.h>
-
+# include <signal.h>
 
 # define STDIN 			0
 # define STDOUT 		1
