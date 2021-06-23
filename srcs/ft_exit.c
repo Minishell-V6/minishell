@@ -6,11 +6,11 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:56:10 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 17:51:39 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 12:17:33 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int				ft_exit(t_cmd *cmd_list)
 {

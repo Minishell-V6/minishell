@@ -6,14 +6,14 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/21 15:05:27 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/23 13:12:06 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -53,14 +53,11 @@ void				free_all(t_cmd *cmd_list);
 void				ft_env(char **envp);
 char				**copy_envp(char **envs);
 //export
-void				print_export(char **envp);
-int					isvalid_export(char *line);
-void				remove_char(char *str, char c);
-int					cnt_envp_row(char **envp);
 void				ft_export(t_cmd *cmd_list, char ***envp);
 int					add_envp(t_cmd *cmd_list, char ***envp);
+int					isvalid_export(char *line);
+int					cnt_envp_row(char **envp);
 char				**sort_env(char **envp);
-void				print_quote(char *str);
-int					check_key(char **envp, char *line);
 int					haveequal(char *line);
+void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 #endif

@@ -6,11 +6,11 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 14:57:25 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 17:28:27 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 12:18:17 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void			parse(t_cmd **cmd_list, char *line)
 {

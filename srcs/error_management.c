@@ -6,11 +6,11 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 16:38:40 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 12:15:40 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void			error_write(char *error_str, char *err_cmdline, char *err_cmdline2)
 {
@@ -46,4 +46,6 @@ void			print_errstr(t_cmd *cmd_list)
 		error_write("minishell: %s: No such file or directory\n", cmd_list->cmdline[cmd_list->err_manage->errindex], 0);
 	else if (cmd_list->err_manage->errcode == 4)
 		error_write("minishell: %s: %s: numeric argument required\n" ,cmd_list->cmdline[0], cmd_list->cmdline[cmd_list->err_manage->errindex]);
+	else if (cmd_list->err_manage->errcode == 5)
+		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0], ft_split(cmd_list->cmdline[1],'=')[0]);
 }

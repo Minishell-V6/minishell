@@ -6,11 +6,11 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/21 14:46:36 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/22 12:15:56 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 {
