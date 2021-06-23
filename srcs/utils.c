@@ -6,11 +6,40 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/17 22:24:20 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/22 12:18:32 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
+
+void			free_all(t_cmd *cmd_list)
+{
+	t_cmd		*tmp;
+	int			i;
+
+	tmp = cmd_list;
+	while (1)
+	{
+		i = 0;
+		if (cmd_list->next == NULL)
+			break ;
+		else
+		{
+			tmp = cmd_list;
+			cmd_list = cmd_list->next;
+		}
+		while (tmp->cmdline[i] != NULL)
+			free(tmp->cmdline[i++]);
+		free(tmp->cmdline);
+		free(tmp->err_manage);
+		free(tmp);
+	}
+	while (tmp->cmdline[i] != NULL)
+		free(tmp->cmdline[i++]);
+	free(tmp->cmdline);
+	free(cmd_list->err_manage);
+	free(cmd_list);
+}
 
 t_cmd			*ft_new(char *line, int pipe_flag, char quote)
 {

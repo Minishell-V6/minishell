@@ -6,10 +6,10 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:38:03 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/16 16:38:12 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/22 12:18:24 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 

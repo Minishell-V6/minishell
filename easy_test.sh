@@ -2,7 +2,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 BLANK='\033[0m'
 
-echo "$0\n"
+#echo "$0\n"
 if [ $# -eq 1 ]; then
 	ARG="$1";
 else
@@ -11,13 +11,15 @@ else
 	exit
 fi
 
-value1=$(echo $ARG | bash)
-value2=$(echo $ARG | ./minishell)
-if [ $value1=$value2 ]
+bash_result=$(echo $ARG | bash)
+bash_exit=$?
+minishell_result=$(echo $ARG | ./minishell)
+minishell_exit=$?
+if [ "$bash_result" == "$minishell_result" ]
 then
-        echo -e "$GREEN OK$BLANK"
+        printf "$GREEN OK$BLANK\n"
 else
-        echo -e "$RED Kill$BLANK"
+        printf "$RED Kill$BLANK\n"
 fi
-echo -e "=========value1=========\n$value1"
-echo -e "=========value2=========\n$value2"
+printf "=========bash_result=========\n$bash_result\n"
+printf "=========minishell_result=========\n$minishell_result\n"

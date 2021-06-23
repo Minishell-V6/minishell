@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hoylee <hoylee@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: thjacque <thjacque@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/06/18 12:32:25 by hoylee            #+#    #+#              #
-#    Updated: 2021/06/18 17:55:17 by hoylee           ###   ########.fr        #
+#    Created: 2021/01/13 20:16:23 by thallard          #+#    #+#              #
+#    Updated: 2021/02/19 11:04:41 by thjacque         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ ALL=0
 SPEED=0.09
 VALGRIND=
 
-# Check if 0 arguments is set
+# Check if 0 arguments is set 
 if [ "$1" == "help" ]; then
     printf "How to use this tester ?\n"
     printf "    use ${YELLOW}\"bash test.sh [--diff] [--fast] [--short] [--valgrind] <name_file> ...\"${BLANK} to run a specific built-in command test (echo, unset, export, etc...).\n"
@@ -54,7 +54,7 @@ if [[ -f "$PATH_Makefile/Makefile" ]]; then
 	} > tmp/errors_makefile
 	if [ -z "$(cat tmp/errors_makefile | grep error)" ]; then
 		printf "${GREENB}Makefile successfully created, your executable minishell is ready.\n"
-	else
+	else 
 		printf "\033[1;31mError : Makefile can't compile, check above errors.\n"
 		RUN=0
 	fi
@@ -63,16 +63,15 @@ else
 	RUN=0
 fi
 if [[ -f "$PATH_executable/minishell" ]]; then
-	cp $PATH_executable/minishell .
+	cp $PATH_executable/minishell . 
 else
 	printf "\033[1;31mError : Executable \"minishell\" doesn't found with the path : \""$PATH_executable/minishell"\", please be sure to change the variable \"PATH_executable\" or to move your executable in the right folder.\n"
 	RUN=0
 fi
-# run is 1 mean, minishell 실행파일을 쓸수 있다.
+
 # Run main program if all the checks are done
 if [ "$RUN" == "1" ]; then
-	# Read inputs files for cat commanda
-	# 메게 변수 아무것도 없으면 실행
+	# Read inputs files for cat command
 	if [ -z "$1" ]; then
 		printf "${GREENB}You have chosen  to run all tests without ${YELLOW}[--diff]${GREENB} (differences between minishell and bash results).${BLANK}\n\n"
 		FILE_TO_READ="$(find file_tests -type f -name "*.txt" -print)"
@@ -94,7 +93,7 @@ if [ "$RUN" == "1" ]; then
 					printf "${RED}The tester is not working with your minishell, check the \"Get Started\" part of the repository : https://github.com/thallard/minishell_tester.\n"
 					printf "Your result     : [${MINISHELL_RESULT}] and exit status : $MINISHELL_EXIT\n"
 					printf "Expected result : [${BASH_RESULT}] and exit status : $BASH_EXIT\n"
-				fi
+				fi 
 				RUN=0
 				break
 			elif [ "$var" == "--diff" ] || [ "$var" == "-d" ]; then
@@ -113,7 +112,7 @@ if [ "$RUN" == "1" ]; then
 						exit
 					fi
 					ALL=1
-					break
+					break 
 				else
 					FILE_TO_READ="$FILE_TO_READ $(find file_tests -name "$var?*" -print)"
 					if [ -z "$(find file_tests -name "$var?*" -print)" ]; then
@@ -153,10 +152,10 @@ if [ "$RUN" == "1" ]; then
 				elif [ "$(printf '%s' "$line" | cut -c1)" == "-" ] && [ "$SPEED" == "0.09" ]; then
 					printf "\n${GREENB}${line}\n"
 					sleep 1
-					continue
+					continue 
 				elif [ "$(printf '%s' "$line" | cut -c1)" == "-" ] && [ "$SPEED" == "0.001" ]; then
 					printf "\n${GREENB}${line}\n"
-					continue
+					continue 
 				fi
 				# If Valgrind flags is enabled, run tests with valgrind
 				BASH_RESULT=$(echo $line | bash 2>&-)
@@ -198,9 +197,9 @@ if [ "$RUN" == "1" ]; then
 				i=$((i + 1))
 				echo $i >> tmp/total
 				sleep $SPEED
-
+			
 			done
-
+		
 		printf "\n${GREEN}Conclusion : $(cat tmp/valid | wc -l | xargs)/$(cat tmp/total | wc -l | xargs) tests passed.\n"
 		printf "$(cat tofix/tofix_tests.txt | wc -l | xargs) wrong tests were added in \"${YELLOW}./tofix/tofix_tests.txt${GREEN}\".\n"
 		rm -rf tmp/valid tmp/total
