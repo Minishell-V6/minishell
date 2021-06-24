@@ -6,13 +6,13 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/22 17:34:40 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/23 18:12:07 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
+int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 {
 	char		*path;
 	int			status;
@@ -57,10 +57,12 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char *envp[])
 	return (0);
 }
 
-int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
+int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
+	fds[1] = 1;
 	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
 		printf("%s\n", getcwd(NULL, 0));
+//		ft_putstr_fd(getcwd(NULL, 0), fds[1]);
 	else if (ft_strncmp("cd", cmd_list->cmdline[0], 3) == 0)
 		return (ft_cd(cmd_list->cmdline[1]));
 	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
@@ -72,4 +74,39 @@ int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	else if (non_builtin(cmd_list, argv, *envp) == 0)
 		return (-1);
 	return (0);
+}
+
+int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
+{
+	int			fds[2];
+	int			status;
+	pid_t		pid;
+	pid_t		wpid;
+
+	pipe(fds);
+	printf("exec\n");
+	if (exec_function(cmd_list, argv, envp, fds) == -1)
+		return (-1);
+	if (cmd_list->next != NULL)
+		pid = fork();
+	else
+		return (0);
+	printf("pid : %d\n", pid);
+	if (pid == 0)
+	{
+		dup2(fds[0], 0);
+		close(fds[0]);
+//		close(fds[1]);
+		cmd_list = cmd_list->next;
+		exec(cmd_list, argv, envp);
+		exit(0);
+//		if (exec(cmd_list, argv, envp) == -1)
+//			return (-1);
+	}
+	else
+	{
+		close(fds[0]);
+		wpid = waitpid(pid, &status, 0);
+		return (0);
+	}
 }

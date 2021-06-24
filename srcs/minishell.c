@@ -6,11 +6,11 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/21 14:37:25 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/23 17:49:54 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int				main(int argc, char *argv[], char *envp[])
 {
@@ -25,9 +25,14 @@ int				main(int argc, char *argv[], char *envp[])
 		if (*line != '\0')
 		{
 			parse(&cmd_list, line);
-			if (exec(cmd_list, argv, &envp) == -1)
+//			while (cmd_list->next != NULL)
+//			{
+//				printf("%s\n", cmd_list->cmdline[0]);
+//				cmd_list = cmd_list->next;
+//			}
+			if (exec(cmd_list, argv, &cpenv) == -1)
 				print_errstr(cmd_list);
-			free_all(cmd_list);
+//			free_all(cmd_list);
 			add_history(line);
 		}
 		free(line);
