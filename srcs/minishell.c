@@ -20,8 +20,10 @@ int				main(int argc, char *argv[], char *envp[])
 
 	argc = 1;
 	cpenv = copy_envp(envp);
-	while ((line = readline("minishell $ ")) != NULL)
+	set_signal();
+	while (1)
 	{
+		line = readline("minishell $ ");
 		if (*line != '\0')
 		{
 			parse(&cmd_list, line);
