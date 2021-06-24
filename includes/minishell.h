@@ -60,4 +60,6 @@ int					cnt_envp_row(char **envp);
 char				**sort_env(char **envp);
 int					haveequal(char *line);
 void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
+//signal
+void				set_signal(void);
 #endif

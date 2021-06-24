@@ -14,6 +14,9 @@ CC 				= gcc
 RM				= rm -rf
 CFLAGS 			= -Wall -Wextra -Werror
 NAME 			= minishell
+
+#READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
+#READLINE_INC	= -I/usr/local/opt/readline/include
 READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
 READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 
@@ -23,7 +26,7 @@ LIBFT_DIR	= libft
 SRC_DIR 	= srcs
 SRC 		= srcs/minishell.c srcs/utils.c srcs/parse.c srcs/exec.c \
 	  	  	  srcs/error_management.c srcs/ft_cd.c srcs/ft_exit.c srcs/ft_env.c\
-			  srcs/ft_export.c srcs/export_utils.c
+			  srcs/ft_export.c srcs/export_utils.c srcs/signal_handle.c
 
 OBJ_DIR 	= objs
 OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
