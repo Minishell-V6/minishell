@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/23 18:14:22 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/24 16:43:27 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -43,7 +42,8 @@ typedef struct	s_cmd
 void				parse(t_cmd **cmd_list, char *line);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote);
 char				check_quote(char *line);
-int					exec(t_cmd *cmd_list, char *argv[], char **envp[]);
+int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
+int					exec(t_cmd *cmp_list, char *argv[], char **envp[]);
 int					ft_cd(char *string);
 int					ft_exit(t_cmd *cmd_list);
 void				print_errstr(t_cmd *cmd_list);
