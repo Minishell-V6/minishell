@@ -6,49 +6,37 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/23 15:42:44 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/25 11:09:25 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
+int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 {
 	char		*path;
 	int			status;
 	pid_t		pid;
-	pid_t		wait_pid;
+	pid_t		wpid;
 
 	path = NULL;
 	if (ft_strncmp("ls", cmd_list->cmdline[0], 3) == 0)
-	{
-		pid = fork();
 		path = "/bin/ls";
-	}
 	else if (ft_strncmp("ps", cmd_list->cmdline[0], 3) == 0)
-	{
-		pid = fork();
 		path = "/bin/ps";
-	}
 	else if (ft_strncmp("cat", cmd_list->cmdline[0], 4) == 0)
-	{
-		pid = fork();
 		path = "/bin/cat";
-//		argv[0] = "/bin/cat";
-//		argv[1] = cmd_list->cmdline[1];
-//		argv[2] = NULL;
-	}
+	pid = fork();
 	if (path != NULL && pid == 0)
 	{
+		if (cmd_list->pipe_flag == 1)
+			dup2(fds[1], 1);
 		execve(path, argv, envp);
-		path = NULL;
 		exit(0);
 	}
 	else if (path != NULL && pid != 0)
 	{
-		while ((((wait_pid = wait(&status)) == -1) && errno == EINTR))
-		{
-		}
+		wpid = waitpid(pid, &status, 0);
 		return (1);
 	}
 	else if (path == NULL && pid == 0)
@@ -59,24 +47,28 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 
 int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
-//	fds[1] = 1;
+	int fd;
+
+	if (cmd_list->pipe_flag == 1)
+		fd = fds[1];
+	else
+		fd = 1;
 	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
-		ft_putstr_fd(getcwd(NULL, 0), fds[1]);
-//		printf("%s\n", getcwd(NULL, 0));
+		return (ft_pwd(fd));
 	else if (ft_strncmp("cd", cmd_list->cmdline[0], 3) == 0)
 		return (ft_cd(cmd_list->cmdline[1]));
 	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
 		return (ft_exit(cmd_list));
 	else if (ft_strncmp("env", cmd_list->cmdline[0], 4) == 0)
-		ft_env(*envp);
+		ft_env(*envp, fd);
 	else if (ft_strncmp("export", cmd_list->cmdline[0], 7) == 0)
-		ft_export(cmd_list, envp);
-	else if (non_builtin(cmd_list, argv, *envp) == 0)
+		ft_export(cmd_list, envp, fd);
+	else if (non_builtin(cmd_list, argv, *envp, fds) == 0)
 		return (-1);
 	return (0);
 }
 
-int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
+void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 {
 	int			fds[2];
 	int			status;
@@ -84,25 +76,24 @@ int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	pid_t		wpid;
 
 	pipe(fds);
-	exec_function(cmd_list, argv, envp, fds);
-	if (cmd_list->next != NULL)
+	if (exec_function(cmd_list, argv, envp, fds) == -1)
+		print_errstr(cmd_list);
+	if (cmd_list->pipe_flag == 1)
 		pid = fork();
 	else
-		return (0);
+		return ;
 	if (pid == 0)
 	{
 		dup2(fds[0], 0);
 		close(fds[0]);
 		close(fds[1]);
-		exec(cmd_list, argv, envp);
+		exec(cmd_list->next, argv, envp);
 		exit(0);
-//		if (exec(cmd_list, argv, envp) == -1)
-//			return (-1);
 	}
 	else
 	{
 		close(fds[0]);
 		wpid = waitpid(pid, &status, 0);
-		return (0);
+		return ;
 	}
 }
