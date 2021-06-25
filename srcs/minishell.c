@@ -21,9 +21,8 @@ int				main(int argc, char *argv[], char *envp[])
 	argc = 1;
 	cpenv = copy_envp(envp);
 	set_signal();
-	while (1)
+	while ((line = readline("minishell $ ")))
 	{
-		line = readline("minishell $ ");
 		if (*line != '\0')
 		{
 			parse(&cmd_list, line);
@@ -34,5 +33,8 @@ int				main(int argc, char *argv[], char *envp[])
 		}
 		free(line);
 	}
+	ft_putstr_fd("\x1b[1A", STDOUT);
+	ft_putstr_fd("\033[12C",STDOUT);
+	ft_putstr_fd("exit\n", STDOUT);
 	return (0);
 }
