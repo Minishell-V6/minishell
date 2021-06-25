@@ -6,13 +6,13 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:14 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/22 12:17:18 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/24 22:49:46 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_env(char **envp)
+void			ft_env(char **envp, int fd)
 {
 	int	i;
 
@@ -21,14 +21,14 @@ void	ft_env(char **envp)
 	{
 		if (haveequal(envp[i]))
 		{
-			ft_putstr_fd(envp[i], STDOUT);
-			ft_putchar_fd('\n', STDOUT);
+			ft_putstr_fd(envp[i], fd);
+			ft_putchar_fd('\n', fd);
 		}
 		i++;
 	}
 }
 
-char	**copy_envp(char **envs)
+char			**copy_envp(char **envs)
 {
 	char	**new;
 	int		i;

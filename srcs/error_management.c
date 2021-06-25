@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/22 12:15:40 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/25 00:29:48 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void			print_errstr(t_cmd *cmd_list)
 	else if (cmd_list->err_manage->errcode == 4)
 		error_write("minishell: %s: %s: numeric argument required\n" ,cmd_list->cmdline[0], cmd_list->cmdline[cmd_list->err_manage->errindex]);
 	else if (cmd_list->err_manage->errcode == 5)
-		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0], ft_split(cmd_list->cmdline[1],'=')[0]);
+		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0], ft_split(cmd_list->cmdline[1], '=')[0]);
 }

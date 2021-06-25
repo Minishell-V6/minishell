@@ -6,13 +6,13 @@
 /*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/22 20:24:08 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/24 22:59:48 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_quote(char *str)
+void			print_quote(char *str, int fd)
 {
 	int i;
 
@@ -21,22 +21,22 @@ void	print_quote(char *str)
 	{
 		while (str[i] != '=')
 			i++;
-		write(1, str, ++i);
-		write(1, "\"", 1);
-		write(1, str + i, ft_strlen(str + i));
-		write(1, "\"", 1);
+		write(fd, str, ++i);
+		write(fd, "\"", 1);
+		write(fd, str + i, ft_strlen(str + i));
+		write(fd, "\"", 1);
 	}
 	else
 	{
 		while (str[i])
 			i++;
-		write(1, str, ++i);
-		write(1, "=", 1);
-		write(1, "\"\"", 2);
+		write(fd, str, ++i);
+		write(fd, "=", 1);
+		write(fd, "\"\"", 2);
 	}
 }
 
-void	print_export(char **envp)
+void			print_export(char **envp, int fd)
 {
 	int		i;
 	char	**sorted;
@@ -45,15 +45,15 @@ void	print_export(char **envp)
 	sorted = sort_env(envp);
 	while (sorted[i])
 	{
-		ft_putstr_fd("declare -x ", STDOUT);
-		print_quote(sorted[i]);
-		ft_putchar_fd('\n', STDOUT);
+		ft_putstr_fd("declare -x ", fd);
+		print_quote(sorted[i], fd);
+		ft_putchar_fd('\n', fd);
 		i++;
 	}
 	free(sorted);
 }
 
-int		check_key(char **envp, char *line)
+int				check_key(char **envp, char *line)
 {
 	int i;
 	int key;
@@ -79,11 +79,11 @@ int		check_key(char **envp, char *line)
 	return (-1);
 }
 
-int		add_envp(t_cmd *cmd_list, char ***envp)
+int				add_envp(t_cmd *cmd_list, char ***envp)
 {
-	char	**new;
-	int		row;
-	int		i;
+	char		**new;
+	int			row;
+	int			i;
 
 	i = 0;
 	row = cnt_envp_row(*envp);
@@ -103,10 +103,10 @@ int		add_envp(t_cmd *cmd_list, char ***envp)
 	return (1);
 }
 
-void	ft_export(t_cmd *cmd_list, char ***envp)
+void			ft_export(t_cmd *cmd_list, char ***envp, int fd)
 {
-	int	i;
-	int keyindex;
+	int			i;
+	int 		keyindex;
 
 	i = 0;
 	if (cmd_list->cmdline[1])
@@ -128,5 +128,5 @@ void	ft_export(t_cmd *cmd_list, char ***envp)
 		}
 	}
 	else
-		print_export(*envp);
+		print_export(*envp, fd);
 }
