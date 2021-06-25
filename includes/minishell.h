@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/23 13:12:06 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/24 22:39:13 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,17 @@ typedef struct	s_err
 typedef struct	s_cmd
 {
 	char			**cmdline;
+//	t_token			*token;
 	int				pipe_flag;
 	char			quote;
 	struct s_err	*err_manage;
 	struct s_cmd	*next;
+
+	char			*(redirect_filename[4]);
+	//index 0 : left redirect filename;
+	//index 1 : left redirect char (<, <<);
+	//index 2 : righ redirect filename;
+	//index 3 : righ redirect char (>, >>);
 }				t_cmd;
 
 void				parse(t_cmd **cmd_list, char *line);
