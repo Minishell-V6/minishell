@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/23 18:12:07 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/24 12:50:13 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 		path = "/bin/cat";
 //		argv[0] = "/bin/cat";
 //		argv[1] = cmd_list->cmdline[1];
-//		argv[2] = NULL;
+//		argv[0] = NULL;
 	}
 	if (path != NULL && pid == 0)
 	{
@@ -59,10 +59,13 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp)
 
 int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
-	fds[1] = 1;
+//	fds[1] = 1;
 	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
-		printf("%s\n", getcwd(NULL, 0));
-//		ft_putstr_fd(getcwd(NULL, 0), fds[1]);
+	{
+//		printf("%s\n", getcwd(NULL, 0));
+		ft_putstr_fd(getcwd(NULL, 0), fds[1]);
+		write(fds[1], "$", 1);
+	}
 	else if (ft_strncmp("cd", cmd_list->cmdline[0], 3) == 0)
 		return (ft_cd(cmd_list->cmdline[1]));
 	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
