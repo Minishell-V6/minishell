@@ -6,42 +6,25 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/22 12:18:32 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/25 10:54:26 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void			free_all(t_cmd *cmd_list)
+void			free_structure(t_cmd *cmd_list)
 {
-	t_cmd		*tmp;
 	int			i;
 
-	tmp = cmd_list;
-	while (1)
-	{
-		i = 0;
-		if (cmd_list->next == NULL)
-			break ;
-		else
-		{
-			tmp = cmd_list;
-			cmd_list = cmd_list->next;
-		}
-		while (tmp->cmdline[i] != NULL)
-			free(tmp->cmdline[i++]);
-		free(tmp->cmdline);
-		free(tmp->err_manage);
-		free(tmp);
-	}
-	while (tmp->cmdline[i] != NULL)
-		free(tmp->cmdline[i++]);
-	free(tmp->cmdline);
+	i = 0;
+	while (cmd_list->cmdline[i] != NULL)
+		free(cmd_list->cmdline[i++]);
+	free(cmd_list->cmdline);
 	free(cmd_list->err_manage);
 	free(cmd_list);
 }
 
-t_cmd			*ft_new(char *line, int pipe_flag, char quote)
+t_cmd			*ft_new(char *line, int pipe_flag, char quote, int exit_flag)
 {
 	t_cmd		*result;
 
@@ -51,6 +34,10 @@ t_cmd			*ft_new(char *line, int pipe_flag, char quote)
 		return (NULL);
 	result->cmdline = ft_split(line, ' ');
 	result->pipe_flag = pipe_flag;
+	if (exit_flag == 0 && pipe_flag == 0)
+		result->exit_flag = 1;
+	else
+		result->exit_flag = 0;
 	result->quote = quote;
 	result->err_manage->errcode = 0;
 	result->err_manage->errindex = 0;
@@ -100,8 +87,6 @@ char			check_quote(char *line)
 	}
 	return (result);
 }
-
-
 
 //char			check_quote(char *line)
 //{
