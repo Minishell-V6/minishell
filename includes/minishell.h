@@ -41,10 +41,10 @@ typedef struct	s_cmd
 	struct s_cmd	*next;
 
 	char			*(redirect_filename[4]);
-	//index 0 : left redirect filename;
-	//index 1 : left redirect char (<, <<);
-	//index 2 : righ redirect filename;
-	//index 3 : righ redirect char (>, >>);
+	//index 0 : left redirect char (<, <<);
+	//index 1 : left redirect filename;
+	//index 2 : righ redirect char (>, >>);
+	//index 3 : righ redirect filename;
 }				t_cmd;
 
 void				parse(t_cmd **cmd_list, char *line);

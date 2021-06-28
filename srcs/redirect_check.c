@@ -44,5 +44,5 @@ int		redirect_check(t_cmp *cmd_list)
 		}
 		i++;
 	}
-	return 0;
+	return (cmd_list->redirect_filename[0] || cmd_list->redirect_filename)[2] ? 1 : 0;
 }
