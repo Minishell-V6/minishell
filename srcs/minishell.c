@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/25 19:31:15 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/28 13:47:52 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int				main(int argc, char *argv[], char *envp[])
 			parse(&cmd_list, line);
 //			if(redirect_check(cmd_line) == 1)
 //				redirect();
-			else
+//			else
 				if (exec(cmd_list, argv, &cpenv) == -1)
 					print_errstr(cmd_list);
 			free_all(cmd_list);
