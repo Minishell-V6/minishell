@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 16:27:26 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 21:19:15 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		if (*line != '\0')
 		{
-			parse(&cmd_list, line);
+			parse(&cmd_list, line, cpenv);
 			exec(cmd_list, argv, &cpenv);
 			free_structure(cmd_list);
 		}

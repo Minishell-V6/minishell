@@ -6,13 +6,13 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 14:57:25 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/24 22:36:26 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/29 21:21:09 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void			parse(t_cmd **cmd_list, char *line)
+void			parse(t_cmd **cmd_list, char *line, char **envp)
 {
 	int			i;
 	int			start;
@@ -32,6 +32,7 @@ void			parse(t_cmd **cmd_list, char *line)
 			else
 				pipe_flag = 0;
 			new = ft_new(&line[start], pipe_flag, check_quote(line), start);
+			ft_alloc_token(new->cmdline, envp);
 			if (start == 0)
 			{
 				*cmd_list = new;
