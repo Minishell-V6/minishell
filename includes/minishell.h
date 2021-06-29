@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "alloc_token.h"
+# include <fcntl.h>
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -37,6 +38,11 @@ typedef struct	s_cmd
 	int				pipe_flag;
 	int				exit_flag;
 	char			quote;
+	char			*(redirect_filename[4]);
+	//index 0 : left redirect char (<, <<);
+	//index 1 : left redirect filename;
+	//index 2 : righ redirect char (>, >>);
+	//index 3 : righ redirect filename;
 	struct s_err	*err_manage;
 	struct s_cmd	*next;
 }				t_cmd;
@@ -66,4 +72,8 @@ int					haveequal(char *line);
 void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 //signal
 void				set_signal(void);
+
+//redirect
+void				redirect(t_cmd *cmd_list);
+int					redirect_check(t_cmd *cmd_list);
 #endif
