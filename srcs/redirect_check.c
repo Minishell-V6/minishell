@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:36:51 by hoylee            #+#    #+#             */
-/*   Updated: 2021/06/29 19:28:45 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 22:17:06 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	save_filename(t_cmd *cmd_list, int i, int first, int second)
 {
-	cmd_list->redirect_filename[first] = cmd_list->token[i].cmd_line;
-	cmd_list->redirect_filename[second] = cmd_list->token[i + 1].cmd_line;
+	cmd_list->redirect_filename[first] = cmd_list->cmdline[i].cmd;
+	cmd_list->redirect_filename[second] = cmd_list->cmdline[i + 1].cmd;
 }
 
 int				redirect_check(t_cmd *cmd_list)
@@ -28,14 +28,14 @@ int				redirect_check(t_cmd *cmd_list)
 	while (++i < 4)
 		cmd_list->redirect_filename[i] = 0;
 	i = 0;
-	while (cmd_list->token[i])
+	while (cmd_list->cmdline[i].cmd)
 	{
-		if (cmd_list->token[i].recdirect_flag == 0)
+		if (cmd_list->cmdline[i].redir_flag == 0)
 			;
-		else if (ft_strncmp("<", cmd_list->token[i].cmd_line, 2) == 0 
-							|| ft_strncmp("<<", cmd_list->token[i].cmd_line, 3) == 0)
+		else if (ft_strncmp("<", cmd_list->cmdline[i].cmd, 2) == 0 
+							|| ft_strncmp("<<", cmd_list->cmdline[i].cmd, 3) == 0)
 		{
-			fd = open(cmd_list->token[i + 1].cmd_line, O_WRONLY | O_CREAT | O_APPEND, 0744);
+			fd = open(cmd_list->cmdline[i + 1].cmd, O_WRONLY | O_CREAT | O_APPEND, 0744);
 			if (fd > 0)	
 				save_filename(cmd_list, i, 0, 1);
 			else
@@ -46,10 +46,10 @@ int				redirect_check(t_cmd *cmd_list)
 			}
 			close(fd);
 		}
-		else if (ft_strncmp(">", cmd_list->token[i].cmd_line, 2) == 0
-							|| ft_strncmp(">>", cmd_list->token[i].cmd_line, 3) == 0)
+		else if (ft_strncmp(">", cmd_list->cmdline[i].cmd, 2) == 0
+							|| ft_strncmp(">>", cmd_list->cmdline[i].cmd, 3) == 0)
 		{
-			fd = open(cmd_list->token[i + 1].cmd_line, O_WRONLY | O_CREAT | O_APPEND, 0744);
+			fd = open(cmd_list->cmdline[i + 1].cmd, O_WRONLY | O_CREAT | O_APPEND, 0744);
 			if (fd > 0)
 				save_filename(cmd_list, i, 2, 3);
 		}
