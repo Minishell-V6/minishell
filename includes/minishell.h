@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/25 01:19:01 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/29 16:27:51 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -36,6 +37,11 @@ typedef struct	s_cmd
 	int				pipe_flag;
 	int				exit_flag;
 	char			quote;
+	char			*(redirect_filename[4]);
+	//index 0 : left redirect char (<, <<);
+	//index 1 : left redirect filename;
+	//index 2 : righ redirect char (>, >>);
+	//index 3 : righ redirect filename;
 	struct s_err	*err_manage;
 	struct s_cmd	*next;
 }				t_cmd;
@@ -65,4 +71,8 @@ int					haveequal(char *line);
 void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 //signal
 void				set_signal(void);
+
+//redirect
+void				redirect(t_cmd *cmd_list);
+int					redirect_check(t_cmd *cmd_list);
 #endif
