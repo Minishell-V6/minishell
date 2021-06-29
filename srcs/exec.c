@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/25 15:25:38 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 20:04:11 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	{
 		if (cmd_list->pipe_flag == 1)
 			dup2(fds[1], 1);
+		argv[0] = "/bin/cat";
+		argv[1] = cmd_list->cmdline[1];
+		argv[2] = NULL;
 		execve(path, argv, envp);
 		exit(0);
 	}
 	else if (path != NULL && pid != 0)
 	{
 		wpid = waitpid(pid, &status, 0);
+		dup2(100, STDOUT);
+		dup2(101, STDIN);
 		return (1);
 	}
 	else if (path == NULL && pid == 0)
@@ -49,6 +54,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int fd;
 
+//	if (redirect_check(cmd_list) == 1)
+//		redirect(cmd_list);
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else
@@ -65,6 +72,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 		ft_export(cmd_list, envp, fd);
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0)
 		return (-1);
+	dup2(100, STDOUT);
+	dup2(101, STDIN);
 	return (0);
 }
 
