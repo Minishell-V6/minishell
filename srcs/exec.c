@@ -6,7 +6,7 @@
 /*   By: djeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 21:43:04 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/29 22:12:53 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 		if (cmd_list->pipe_flag == 1)
 			dup2(fds[1], 1);
 		argv[0] = "/bin/cat";
-		argv[1] = cmd_list->cmdline[1];
+		argv[1] = cmd_list->cmdline[1].cmd;
 		argv[2] = NULL;
 		execve(path, argv, envp);
 		exit(0);
@@ -54,8 +54,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int fd;
 
-//	if (redirect_check(cmd_list) == 1)
-//		redirect(cmd_list);
+	if (redirect_check(cmd_list) == 1)
+		redirect(cmd_list);
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else

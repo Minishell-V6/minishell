@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:36:03 by hoylee            #+#    #+#             */
-/*   Updated: 2021/06/29 21:03:13 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/06/29 22:20:05 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int				left_redirect(t_cmd *cmd_list)
 {
 	int			fd;
 
-	fd = open("test", O_RDONLY, 0644);
-	//cmd_list->redirect_filename[3]
+	fd = open(cmd_list->redirect_filename[1], O_RDONLY, 0644);
 	if (fd < 0)
 	{
 		printf("no surch file");
@@ -32,8 +31,7 @@ int				left_redirect_double(t_cmd *cmd_list)
 {
 	char		*line;
 
-	//cmd_list->redirect_filename[3]
-	while (ft_strncmp((line = readline("> ")), "test", 5))
+	while (ft_strncmp((line = readline("> ")), cmd_list->redirect_filename[1], 5))
 	{
 		ft_putendl_fd(line, 0);
 	}
@@ -48,13 +46,12 @@ int				right_redirect(t_cmd *cmd_list)
 {
 	int			fd;
 
-	fd = open("test1234", O_WRONLY | O_CREAT | O_TRUNC, 0744);
+	fd = open(cmd_list->redirect_filename[3], O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if (fd < 0)
 	{
 		printf("no surch file");
 		return (-1);
 	}
-	//cmd_list->redirect_filename[3]
 	dup2(fd, STDOUT);
 	close(fd);
 	return (0);
@@ -64,7 +61,7 @@ int				right_redirect_double(t_cmd *cmd_list)
 {
 	int			fd;
 
-	fd = open("test1234", O_WRONLY | O_CREAT | O_APPEND, 0744);
+	fd = open(cmd_list->redirect_filename[3], O_WRONLY | O_CREAT | O_APPEND, 0744);
 	if (fd < 0)
 	{
 		printf("no surch file");
