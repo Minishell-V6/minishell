@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:36:03 by hoylee            #+#    #+#             */
-/*   Updated: 2021/06/29 16:36:31 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 21:03:13 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int				right_redirect_double(t_cmd *cmd_list)
 	return (0);
 }
 
+
+
 void	redirect(t_cmd *cmd_list)
 {
 	if (ft_strncmp("<", cmd_list->redirect_filename[0], 2) == 0)
@@ -86,3 +88,4 @@ void	redirect(t_cmd *cmd_list)
 	else if (ft_strncmp(">>", cmd_list->redirect_filename[2], 3) == 0)
 		right_redirect_double(cmd_list);
 }
+
