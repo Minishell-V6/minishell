@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 16:55:24 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 20:04:11 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	else if (path != NULL && pid != 0)
 	{
 		wpid = waitpid(pid, &status, 0);
+		dup2(100, STDOUT);
+		dup2(101, STDIN);
 		return (1);
 	}
 	else if (path == NULL && pid == 0)
@@ -52,8 +54,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int fd;
 
-	if (redirect_check(cmd_list) == 1)
-		redirect(cmd_list);
+//	if (redirect_check(cmd_list) == 1)
+//		redirect(cmd_list);
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else
