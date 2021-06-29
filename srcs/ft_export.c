@@ -6,7 +6,7 @@
 /*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/24 22:59:48 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/29 21:27:10 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int				add_envp(t_cmd *cmd_list, char ***envp)
 		new[i] = ft_strdup((*envp)[i]);
 		i++;
 	}
-	new[i] = ft_strdup(cmd_list->cmdline[1]);
+	new[i] = ft_strdup(cmd_list->cmdline[1].cmd);
 	new[++i] = NULL;
 	printf("free-envp\n");
 	free(*envp);
@@ -109,13 +109,13 @@ void			ft_export(t_cmd *cmd_list, char ***envp, int fd)
 	int 		keyindex;
 
 	i = 0;
-	if (cmd_list->cmdline[1])
+	if (cmd_list->cmdline[1].cmd)
 	{
-		if (isvalid_export(cmd_list->cmdline[1]))
+		if (isvalid_export(cmd_list->cmdline[1].cmd))
 		{
-			if ((keyindex = check_key(*envp, cmd_list->cmdline[1])) >= 0)
+			if ((keyindex = check_key(*envp, cmd_list->cmdline[1].cmd)) >= 0)
 			{
-				if (haveequal(cmd_list->cmdline[1]))
+				if (haveequal(cmd_list->cmdline[1].cmd))
 					add_key_envp(envp, cmd_list, keyindex);
 			}
 			else

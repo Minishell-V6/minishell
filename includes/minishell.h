@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/25 01:19:01 by mac              ###   ########.fr       */
+/*   Updated: 2021/06/29 21:19:40 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "alloc_token.h"
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -32,7 +33,7 @@ typedef struct	s_err
 
 typedef struct	s_cmd
 {
-	char			**cmdline;
+	t_token			*cmdline;
 	int				pipe_flag;
 	int				exit_flag;
 	char			quote;
@@ -40,7 +41,7 @@ typedef struct	s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
-void				parse(t_cmd **cmd_list, char *line);
+void				parse(t_cmd **cmd_list, char *line, char **envp);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);

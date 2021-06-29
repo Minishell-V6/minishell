@@ -6,7 +6,7 @@
 /*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 16:33:34 by jiylee            #+#    #+#             */
-/*   Updated: 2021/06/22 20:24:48 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/29 21:27:36 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ int		haveequal(char *line)
 void	add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex)
 {
 	free((*envp)[keyindex]);
-	(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1]);
+	(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1].cmd);
 }

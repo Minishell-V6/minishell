@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/25 15:25:38 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/29 21:43:04 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	pid_t		wpid;
 
 	path = NULL;
-	if (ft_strncmp("ls", cmd_list->cmdline[0], 3) == 0)
+	if (ft_strncmp("ls", cmd_list->cmdline[0].cmd, 3) == 0)
 		path = "/bin/ls";
-	else if (ft_strncmp("ps", cmd_list->cmdline[0], 3) == 0)
+	else if (ft_strncmp("ps", cmd_list->cmdline[0].cmd, 3) == 0)
 		path = "/bin/ps";
-	else if (ft_strncmp("cat", cmd_list->cmdline[0], 4) == 0)
+	else if (ft_strncmp("cat", cmd_list->cmdline[0].cmd, 4) == 0)
 		path = "/bin/cat";
 	pid = fork();
 	if (path != NULL && pid == 0)
@@ -53,15 +53,15 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 		fd = fds[1];
 	else
 		fd = 1;
-	if (ft_strncmp("pwd", cmd_list->cmdline[0], 4) == 0)
+	if (ft_strncmp("pwd", cmd_list->cmdline[0].cmd, 4) == 0)
 		return (ft_pwd(fd));
-	else if (ft_strncmp("cd", cmd_list->cmdline[0], 3) == 0)
-		return (ft_cd(cmd_list->cmdline[1]));
-	else if (ft_strncmp("exit", cmd_list->cmdline[0], 5) == 0)
+	else if (ft_strncmp("cd", cmd_list->cmdline[0].cmd, 3) == 0)
+		return (ft_cd(cmd_list->cmdline[1].cmd));
+	else if (ft_strncmp("exit", cmd_list->cmdline[0].cmd, 5) == 0)
 		return (ft_exit(cmd_list));
-	else if (ft_strncmp("env", cmd_list->cmdline[0], 4) == 0)
+	else if (ft_strncmp("env", cmd_list->cmdline[0].cmd, 4) == 0)
 		ft_env(*envp, fd);
-	else if (ft_strncmp("export", cmd_list->cmdline[0], 7) == 0)
+	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		ft_export(cmd_list, envp, fd);
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0)
 		return (-1);
