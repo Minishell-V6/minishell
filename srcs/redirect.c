@@ -5,103 +5,60 @@
 #include <fcntl.h>
 #include "../includes/minishell.h"
 #include "../get_next_line/get_next_line.h"
-
-//int		left_redirect(t_cmd *cmd_list), char *argv[], char **envp[])
-
-//int		main(void)
-//{
-//	int		fd;
-//	int fds[2];                      // an array that will hold two file descriptors
-//	pipe(fds);                       // populates fds with two file descriptors
-//
-//	pid_t pid = fork();
-//	char *buf;
-//	int value;
-//	if (pid == 0)
-//	{
-//		fd = open("test", O_RDONLY, 0644);
-////		fd = open (cmd_list->redirect_filename[1] , O_RDONLY, 0644);
-//		//: 파일을 읽기 전용으로 open합니다.
-//		if (fd < 0)
-//		{
-//			printf("no surch file");
-//			return (-1);
-//		}
-//
-//		close(fds[0]);
-//		//while((value = get_next_line(fd, &buf)  > 0))
-//		//	ft_putendl_fd(buf, fds[1]);
-//		//fds[1]);
-//
-//		dup2(fd, fds[1]);
-//		dup2(fd, STDIN);
-//
-//		//while((value = get_next_line(STDIN, &buf)  > 0))
-//		//	printf("%s\n", buf);
-//		close(fds[1]);
-//		close(fd);
-//		exit(0);
-//	}
-//	int status;
-//	pid_t wpid = waitpid(pid, &status, 0);
-//	close(fds[1]);
-//
-//	//while((value = get_next_line(fds[0], &buf)  > 0))
-//	//	printf("%s\n", buf);
-//	while((value = get_next_line(STDIN, &buf)  > 0))
-//		printf("%s\n", buf);
-//	//while((value = get_next_line(fds[0], &buf)  > 0))
-//	//	printf("%s\n", buf);
-//	//dup2(fds[0], STDIN); 
-//	printf("==%d==", STDIN);
-//	close(fds[0]);
-//	return wpid == pid && WIFEXITED(status) ? WEXITSTATUS(status) : -1;
-//
-//
-////	int fd = open("test", O_RDONLY);
-//  //int fd = open("test", O_WRONLY | O_CREAT | O_APPEND, 0744); 
-////	while((value = get_next_line(0, &buf)  > 0))
-////	{
-////	  printf("%s\n", buf);
-////	  printf("sdfsdf");
-////	}// 이거 있으면 sort출력이 안나오는데,  이거 없으면 소트 출력이 나옴.. 개신깋마.
-//}
-
-//int		right_redirect(t_cmd *cmd_list, char *argv[], char **envp[])
-
-
+#include <readline/readline.h>
+#include <readline/history.h>
 int		left_redirect(void)
 {
 	int		fd;
-//
-//	pid_t pid = fork();
-// ================
+
 	fd = open("test", O_RDONLY, 0644);
+	if (fd < 0)
+	{
+		printf("no surch file");
+		return (-1);
+	}
 	//cmd_list->redirect_filename[3]
 	dup2(fd, STDIN);
 	close(fd);
+	return 0;
+}
 
+		//cmd_line)
+int		left_redirect_double()
+{
+	char	*line;
 
+	//cmd_list->redirect_filename[3]
+	while (ft_strncmp((line = readline("> ")), "test", 5))
+	{
+		ft_putendl_fd(line, 122);
+	}
+	char *buf;
+	int value;
+	while((value = get_next_line(122, &buf)  > 0))
+		ft_putendl_fd(buf, STDOUT);
 	return 0;
 }
 
 
 int		right_redirect(void)
 {
-//	int		fd;
+	int		fd;
 
-//	fd = open("test1234", O_WRONLY | O_CREAT | O_TRUNC, 0744);
+	fd = open("test1234", O_WRONLY | O_CREAT | O_TRUNC, 0744);
+	if (fd < 0)
+	{
+		printf("no surch file");
+		return (-1);
+	}
 	//cmd_list->redirect_filename[3]
-//	dup2(fd, STDOUT);
+	dup2(fd, STDOUT);
+	close(fd);
 
 //	char *buf;
 //	int value;
 //	while((value = get_next_line(STDIN, &buf)  > 0))
-//	{
-//	  printf("%s\n", buf);
-//	}
-//	close(fd);
-//	close(STDOUT);
+//		ft_putendl_fd(buf, STDOUT);
 	return 0;
 }
 
@@ -110,43 +67,30 @@ int		right_redirect_double(void)
 	int		fd;
 
 	fd = open("test1234", O_WRONLY | O_CREAT |  O_APPEND, 0744);
-	write(fd, "***\n", 4);
+	if (fd < 0)
+	{
+		printf("no surch file");
+		return (-1);
+	}
+	dup2(fd, STDOUT);
 	close (fd);
+	write(fd, "***\n", 4);
 	return 0;	
 }
-//	//0744
-//	//cmd_list->redirect_filename[3]
-//	dup2(fd, STDOUT);
-////	char *buf;
-////	int value;
-////	while((value = get_next_line(STDIN, &buf)  > 0))
-////	{
-////	  printf("%s\n", buf);
-////	}
-//
-//	write(STDOUT, "wersaaawjekfjf\n", 4);
-//	write(STDOUT, "b", 1);
-//	write(STDOUT, "b", 1);
-//	write(STDOUT, "b", 1);
-//	write(STDOUT, "b", 1);
-//	write(STDOUT, "asdfqw", 6);
-//	
-//	close(fd);
-//	close(STDOUT);
-//	//printf("giigigigi");
-//	return 0;
-//}
 
 int		main(void)
 {
 	int fd;
-	
-	left_redirect();
-//	fd = open("test1234", O_WRONLY | O_CREAT | O_TRUNC, 0744);
-//	close(fd);
-	fd = open("test1234", O_WRONLY | O_CREAT |  O_APPEND, 0744);
-	write(fd, "***\n", 4);
-	close (fd);	
+
+	//dup2(STDOUT, 100);
+	//STDOUT dup로 변환하기 전에 백업 해두는게 좋을듯
+	//minishell 시작할떄 부터 하는게 좋을듯.
+	//left_redirect();
+	left_redirect_double();
+	//매게변수로 cmd_list
+	right_redirect();
+	right_redirect_double();
+
 	return 0;
 }
 
@@ -227,9 +171,75 @@ int		main(void)
 //		right_redirect_double();
 //	exec(cmd_line, argv, envp);
 //	//exec_function
+	//이러고 나서 원래 표준출력으로 바꿔야함. 미리 저장해두자.
+
 //}
 //
 //
+
+
+//int		left_redirect(t_cmd *cmd_list), char *argv[], char **envp[])
+
+//int		main(void)
+//{
+//	int		fd;
+//	int fds[2];                      // an array that will hold two file descriptors
+//	pipe(fds);                       // populates fds with two file descriptors
+//
+//	pid_t pid = fork();
+//	char *buf;
+//	int value;
+//	if (pid == 0)
+//	{
+//		fd = open("test", O_RDONLY, 0644);
+////		fd = open (cmd_list->redirect_filename[1] , O_RDONLY, 0644);
+//		//: 파일을 읽기 전용으로 open합니다.
+//		if (fd < 0)
+//		{
+//			printf("no surch file");
+//			return (-1);
+//		}
+//
+//		close(fds[0]);
+//		//while((value = get_next_line(fd, &buf)  > 0))
+//		//	ft_putendl_fd(buf, fds[1]);
+//		//fds[1]);
+//
+//		dup2(fd, fds[1]);
+//		dup2(fd, STDIN);
+//
+//		//while((value = get_next_line(STDIN, &buf)  > 0))
+//		//	printf("%s\n", buf);
+//		close(fds[1]);
+//		close(fd);
+//		exit(0);
+//	}
+//	int status;
+//	pid_t wpid = waitpid(pid, &status, 0);
+//	close(fds[1]);
+//
+//	//while((value = get_next_line(fds[0], &buf)  > 0))
+//	//	printf("%s\n", buf);
+//	while((value = get_next_line(STDIN, &buf)  > 0))
+//		printf("%s\n", buf);
+//	//while((value = get_next_line(fds[0], &buf)  > 0))
+//	//	printf("%s\n", buf);
+//	//dup2(fds[0], STDIN); 
+//	printf("==%d==", STDIN);
+//	close(fds[0]);
+//	return wpid == pid && WIFEXITED(status) ? WEXITSTATUS(status) : -1;
+//
+//
+////	int fd = open("test", O_RDONLY);
+//  //int fd = open("test", O_WRONLY | O_CREAT | O_APPEND, 0744); 
+////	while((value = get_next_line(0, &buf)  > 0))
+////	{
+////	  printf("%s\n", buf);
+////	  printf("sdfsdf");
+////	}// 이거 있으면 sort출력이 안나오는데,  이거 없으면 소트 출력이 나옴.. 개신깋마.
+//}
+
+
 //
 //int main(int argc, char *argv[]) {
 //  int fds[2];                      // an array that will hold two file descriptors
