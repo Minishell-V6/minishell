@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 14:57:25 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 21:21:09 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 20:50:24 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			parse(t_cmd **cmd_list, char *line, char **envp)
 				line[i] = '\0';
 			else
 				pipe_flag = 0;
-			new = ft_new(&line[start], pipe_flag, check_quote(line), start);
+			new = ft_new(&line[start], pipe_flag, 0, start);
 			ft_alloc_token(new->cmdline, envp);
 			if (start == 0)
 			{

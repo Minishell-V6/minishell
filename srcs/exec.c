@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 17:57:37 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/30 20:58:40 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, 
 	if (pid == 0)
 	{
 		if (cmd_list->pipe_flag == 1)
-			dup2(fds[1], 1); // 이건 뭘까요??.. : pipe 다음명령어로 출력시켜줍니다.
+			dup2(fds[1], 1);
 		execve(path, argv, envp);
 		exit(0);
 	}
@@ -59,7 +59,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	paths = ft_split(env_path, ':');
 	while (paths[++i] != NULL)
 	{
-		tmp = ft_strjoin(paths[i], cmd_list->cmdline[0].cmd);
+		tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd);
 		if (stat(tmp, buf) == 0)
 		{
 			non_builtin_exec(cmd_list, argv, envp, tmp, fds);

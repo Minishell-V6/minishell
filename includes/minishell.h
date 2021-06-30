@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 17:04:59 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/30 20:57:56 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				parse(t_cmd **cmd_list, char *line, char **envp);
 t_cmd				*ft_new(char *line, int pipe_flag, char quote, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
+char				*strjoin_path(char const *s1, char const *s2);
 void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
 int					ft_cd(char *string);
 int					ft_exit(t_cmd *cmd_list);
