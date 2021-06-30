@@ -6,7 +6,7 @@
 /*   By: mac <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 18:05:08 by mac               #+#    #+#             */
-/*   Updated: 2021/06/02 20:55:01 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/30 14:13:58 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 size_t				ft_strlen(const char *s);

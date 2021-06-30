@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 21:19:40 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 20:57:56 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "alloc_token.h"
 # include <stdlib.h>
 # include <errno.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "alloc_token.h"
-# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define STDIN 			0
 # define STDOUT 		1
@@ -51,6 +54,7 @@ void				parse(t_cmd **cmd_list, char *line, char **envp);
 t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
+char				*strjoin_path(char const *s1, char const *s2);
 void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
 int					ft_cd(t_cmd *cmd_list);
 int					ft_exit(t_cmd *cmd_list);

@@ -3,59 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 22:12:53 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 20:58:40 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
+void			non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, int fds[])
 {
-	char		*path;
 	int			status;
 	pid_t		pid;
 	pid_t		wpid;
 	int			i;
-	path = NULL;
-	if (ft_strncmp("ls", cmd_list->cmdline[0].cmd, 3) == 0)
-		path = "/bin/ls";
-	else if (ft_strncmp("ps", cmd_list->cmdline[0].cmd, 3) == 0)
-		path = "/bin/ps";
-	else if (ft_strncmp("cat", cmd_list->cmdline[0].cmd, 4) == 0)
-		path = "/bin/cat";
-	i = 0;
-	while(cmd_list->cmdline[i].cmd != 0 && cmd_list->cmdline[i].redir_flag == 0)
+
+	i = 1;
+	argv[0] = path;
+	while (cmd_list->cmdline[i].cmd != NULL && cmd_list->cmdline[i].redir_flag == 0)
 	{
-		if(i == 0 && cmd_list->cmdline[1].cmd != 0 && cmd_list->cmdline[1].redir_flag == 0)
-			i = 1;
-		pid = fork();
-		if (path != NULL && pid == 0)
-		{
-			if (cmd_list->pipe_flag == 1)
-				dup2(fds[1], 1); // 이건 뭘까요??..
-			//argv[0] = "/bin/cat";
-			argv[0] = path;
-			if(i == 0)
-				argv[1] = 0;
-			else
-				argv[1] = cmd_list->cmdline[i].cmd;
-			argv[2] = NULL;
-			execve(path, argv, envp);
-			exit(0);
-		}
-		else if (path != NULL && pid != 0)
-			wpid = waitpid(pid, &status, 0);
-		else if (path == NULL && pid == 0)
-			exit(0);
-		else
-		{
-			cmd_list->err_manage->errcode = 1;
-			return (0);
-		}
+		argv[i] = cmd_list->cmdline[i].cmd;
 		i++;
+	}
+	argv[i] = NULL;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (cmd_list->pipe_flag == 1)
+			dup2(fds[1], 1);
+		execve(path, argv, envp);
+		exit(0);
+	}
+	else if (pid != 0)
+		wpid = waitpid(pid, &status, 0);
+	dup2(100, STDOUT);
+	dup2(101, STDIN);
+}
+
+int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
+{
+	struct stat	*buf;
+	char		*env_path;
+	char		**paths;
+	char		*tmp;
+	int			i;
+	int			flag;
+
+	i = -1;
+	flag = 0;
+	if (!(buf = (struct stat*)malloc(sizeof(buf))))
+		return (-1);
+	if ((env_path = get_env_value("PATH", envp)) == NULL)
+		return (-1);
+	paths = ft_split(env_path, ':');
+	while (paths[++i] != NULL)
+	{
+		tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd);
+		if (stat(tmp, buf) == 0)
+		{
+			non_builtin_exec(cmd_list, argv, envp, tmp, fds);
+			flag = 1;
+			free(tmp);
+			break ;
+		}
+		free(tmp);
+	}
+//	free(env_path);
+//	i = -1;
+//	while (paths[++i] != NULL)
+//		free(paths[i]);
+//	free(paths);
+	if (flag == 0)
+	{
+		cmd_list->err_manage->errcode = 1;
+		return (0);
 	}
 	return (1);
 }
