@@ -6,7 +6,7 @@
 /*   By: djeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 22:12:53 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 21:00:43 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 		ft_env(*envp, fd);
 	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		ft_export(cmd_list, envp, fd);
+//	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 5) == 0)
+//		ft_unset(cmd_list, envp);
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0)
 		return (-1);
 	dup2(100, STDOUT);

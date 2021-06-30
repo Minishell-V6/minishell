@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_split.h                                        :+:      :+:    :+:   */
+/*   unset.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/24 19:19:26 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/30 20:57:02 by sejpark          ###   ########.fr       */
+/*   Created: 2021/06/30 16:27:53 by sejpark           #+#    #+#             */
+/*   Updated: 2021/06/30 17:40:46 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_SPLIT_H
-# define CMD_SPLIT_H
-# include <stdlib.h>
+#ifndef UNSET_H
+# define UNSET_H
 # include "structs.h"
 
-t_token			*cmd_split(char const *s, char c);
+int ft_unset(t_cmd *cmd_list, char ***envp);
 
 #endif
