@@ -12,29 +12,36 @@
 
 #include "../includes/minishell.h"
 
-int		ft_cd(char *string)
+int		ft_cd(t_cmd *cmd_list)
 {
 	int i;
 	char *pst_buffer;	
 
 	i = 0;
-	if (string == 0 || string[0] == 0)
+	if (cmd_list->cmdline[1].cmd == 0)
 	{
 		chdir(getenv("HOME"));
 		return (0);
 	}
 	pst_buffer = getcwd(0, 0);
-	if (string[0] == '~')
+	if (cmd_list->cmdline[1].cmd[0] == '~')
 	{
-		string = string + 1;
-		if(string[0] == '/')
-			string = string + 1;
-		chdir(getenv("HOME"));
+		if(cmd_list->cmdline[1].cmd[1] == '/')
+		{
+			cmd_list->cmdline[1].cmd = ft_substr(cmd_list->cmdline[1].cmd, 1, ft_strlen(cmd_list->cmdline[1].cmd + 1));
+			cmd_list -> cmdline[1].cmd = ft_strjoin(getenv("HOME"), cmd_list->cmdline[1].cmd);
+		}
+		else if(cmd_list->cmdline[1].cmd[1] == 0)
+		{
+			chdir(getenv("HOME"));
+			return (0);
+		}
 	}
-	if (string[0] != 0 && chdir(string) == -1)
+	if (chdir(cmd_list->cmdline[1].cmd) == -1)
 	{
 		chdir(pst_buffer);
-		printf("Error\n");
+		cmd_list->err_manage->errcode = 3;
+		cmd_list->err_manage->errindex = 1;
 		return (-1);
 	}
 	return (0);

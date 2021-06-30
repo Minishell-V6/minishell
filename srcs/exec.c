@@ -65,7 +65,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	int fd;
 
 	if (redirect_check(cmd_list) == 1)
-		redirect(cmd_list);
+		redirect(cmd_list, &fds);
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else
@@ -73,7 +73,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	if (ft_strncmp("pwd", cmd_list->cmdline[0].cmd, 4) == 0)
 		return (ft_pwd(fd));
 	else if (ft_strncmp("cd", cmd_list->cmdline[0].cmd, 3) == 0)
-		return (ft_cd(cmd_list->cmdline[1].cmd));
+		return (ft_cd(cmd_list));
 	else if (ft_strncmp("exit", cmd_list->cmdline[0].cmd, 5) == 0)
 		return (ft_exit(cmd_list));
 	else if (ft_strncmp("env", cmd_list->cmdline[0].cmd, 4) == 0)
@@ -82,8 +82,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 		ft_export(cmd_list, envp, fd);
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0)
 		return (-1);
-	dup2(100, STDOUT);
-	dup2(101, STDIN);
+ // 이거 여기만 있으니까 위에 리턴으로 빠져버리면 적용이 안되네요.
 	return (0);
 }
 
@@ -96,7 +95,11 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 
 	pipe(fds);
 	if (exec_function(cmd_list, argv, envp, fds) == -1)
+	{
 		print_errstr(cmd_list);
+	}
+	dup2(100, STDOUT);
+	dup2(101, STDIN);
 	if (cmd_list->pipe_flag == 1)
 		pid = fork();
 	else

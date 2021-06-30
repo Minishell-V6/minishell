@@ -52,7 +52,7 @@ t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
 void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
-int					ft_cd(char *string);
+int					ft_cd(t_cmd *cmd_list);
 int					ft_exit(t_cmd *cmd_list);
 int					ft_pwd(int fd);
 void				print_errstr(t_cmd *cmd_list);
@@ -74,6 +74,6 @@ void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 void				set_signal(void);
 
 //redirect
-void				redirect(t_cmd *cmd_list);
+void				redirect(t_cmd *cmd_list, int **fds);
 int					redirect_check(t_cmd *cmd_list);
 #endif
