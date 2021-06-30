@@ -6,7 +6,7 @@
 #    By: seojeong <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/25 19:30:48 by djeon             #+#    #+#              #
-#    Updated: 2021/06/29 22:17:47 by sejpark          ###   ########.fr        #
+#    Updated: 2021/06/30 13:36:51 by djeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,8 @@ NAME 			= minishell
 
 #READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
 #READLINE_INC	= -I/usr/local/opt/readline/include
-#READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-#READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
-
-READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
-READLINE_INC	= -I/opt/homebrew/opt/readline/include
+READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 
 LIBFT		= libft.a
 LIBFT_DIR	= libft

@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 21:19:40 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 17:04:59 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "alloc_token.h"
 # include <stdlib.h>
 # include <errno.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "alloc_token.h"
-# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define STDIN 			0
 # define STDOUT 		1
