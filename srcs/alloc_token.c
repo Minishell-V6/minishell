@@ -92,9 +92,9 @@ void ft_copy_str(char *src, char *dest, char **envp)
 	dest_end = dest;
 	while (src[++src_idx])
 	{
-		if (src[src_idx] == '\'')
+		if (src[src_idx] == '\'' && unclosed_quote(&src[src_idx], '\''))
 			src_idx += alloc_s_quote_cnt(&src[src_idx], &dest_end);
-		else if (src[src_idx] == '\"')
+		else if (src[src_idx] == '\"' && unclosed_quote(&src[src_idx], '\"'))
 			src_idx += alloc_d_quote_cnt(&src[src_idx], &dest_end, envp);
 		else if (src[src_idx] == '$')
 			src_idx += alloc_env(&src[src_idx], &dest_end, envp);
