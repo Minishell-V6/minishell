@@ -31,8 +31,8 @@ void			parse(t_cmd **cmd_list, char *line, char **envp)
 				line[i] = '\0';
 			else
 				pipe_flag = 0;
-			new = ft_new(&line[start], pipe_flag, check_quote(line), start);
-			ft_alloc_token(new->cmdline, envp);
+			// new = ft_new(&line[start], pipe_flag, check_quote(line), start);
+			new = ft_new(&line[start], pipe_flag, envp, start);
 			if (start == 0)
 			{
 				*cmd_list = new;

@@ -1,4 +1,8 @@
 #include "../includes/minishell.h"
+
+//수정 필요한 부분 echo는 인자로 여러개를 받을 수 있다. redirection이 아니면 다 받음.
+//구조체를 받아서 다 받아야함. 일반 명령어인지 구조체인지 체크.
+
 //echo의 n옵션 체크함수.
 int         n_opt_chk(char *command)
 {

@@ -48,7 +48,7 @@ typedef struct	s_cmd
 }				t_cmd;
 
 void				parse(t_cmd **cmd_list, char *line, char **envp);
-t_cmd				*ft_new(char *line, int pipe_flag, char quote, int exit_flag);
+t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
 void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
