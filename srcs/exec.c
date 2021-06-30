@@ -65,7 +65,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	int fd;
 
 	if (redirect_check(cmd_list) == 1)
-		redirect(cmd_list);
+		redirect(cmd_list, &fds);
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else

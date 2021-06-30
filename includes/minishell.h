@@ -74,6 +74,6 @@ void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 void				set_signal(void);
 
 //redirect
-void				redirect(t_cmd *cmd_list);
+void				redirect(t_cmd *cmd_list, int **fds);
 int					redirect_check(t_cmd *cmd_list);
 #endif

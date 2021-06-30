@@ -27,18 +27,18 @@ int				left_redirect(t_cmd *cmd_list)
 	return (0);
 }
 
-int				left_redirect_double(t_cmd *cmd_list)
+int				left_redirect_double(t_cmd *cmd_list, int **fds)
 {
 	char		*line;
 
 	while (ft_strncmp((line = readline("> ")), cmd_list->redirect_filename[1], 5))
 	{
-		ft_putendl_fd(line, 0);
+		ft_putendl_fd(line, (*fds)[1]);
 	}
-//	char *buf;
-//	int value;
-//	while((value = get_next_line(0, &buf)  > 0))
-//		ft_putendl_fd(buf, STDOUT);
+	close((*fds)[1]);
+	dup2((*fds)[0], 0);
+	close((*fds)[0]);
+	pipe((*fds));
 	return (0);
 }
 
@@ -74,12 +74,12 @@ int				right_redirect_double(t_cmd *cmd_list)
 
 
 
-void	redirect(t_cmd *cmd_list)
+void	redirect(t_cmd *cmd_list, int **fds)
 {
 	if (ft_strncmp("<", cmd_list->redirect_filename[0], 2) == 0)
 		left_redirect(cmd_list);
 	else if (ft_strncmp("<<", cmd_list->redirect_filename[0], 3) == 0)
-		left_redirect_double(cmd_list);
+		left_redirect_double(cmd_list, fds);
 	if (ft_strncmp(">", cmd_list->redirect_filename[2], 3) == 0)
 		right_redirect(cmd_list);
 	else if (ft_strncmp(">>", cmd_list->redirect_filename[2], 3) == 0)
