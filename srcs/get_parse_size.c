@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:25:19 by seuyu             #+#    #+#             */
-/*   Updated: 2021/06/29 16:50:03 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/01 20:11:37 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		unclosed_quote(char *str, char quote)
 	int	index;
 
 	index = 1;
-	while (str[index] && str[index] != quote) 
+	while (str[index] && str[index] != quote)
 		index++;
 	if (str[index] == '\0') //안닫힌 경우, str[index]는 null문자가 나옴.
 		return (0);
@@ -47,7 +47,7 @@ int		env_value_size(char *str, int size, char **envp)
 int		env_key_size(char *str)
 {
 	int index;
-	
+
 	index = 0;
 	// 문자열에서 $의 자리부터 시작됩니다. ex) $key
 
@@ -63,13 +63,21 @@ int		env_key_size(char *str)
 
 
 
-//환경변수의 key와 value의 길이를 처리해주는 함수입니다. 
+//환경변수의 key와 value의 길이를 처리해주는 함수입니다.
 //key의 길이는 index에 반영되고, value의 길이는 *size에 반영됩니다.
 int		env_cnt(char *str, int *size, char **envp)
 {
 	int index;
+	char *status;
 
 	index = 0;
+	if (str[1] == '?')
+	{
+		status = ft_itoa(g_exit_status);
+		*size += ft_strlen(status);
+		free(status);
+		return (1);
+	}
 	// $가 문자열 끝에 오거나 닫는 쌍따옴표 앞에 오는 경우는 문자로 처리합니다.
 	if (str[1] == '\0' || str[1] == '\"')
 	{
@@ -103,7 +111,7 @@ int		d_quote_cnt(char *str, int *size, char **envp)
 	return (index);
 }
 
-// 따옴표 처리 함수입니다. 
+// 따옴표 처리 함수입니다.
 int		s_quote_cnt(char *str, int *size)
 {
 	int index;
@@ -117,16 +125,16 @@ int		s_quote_cnt(char *str, int *size)
 	return (index);
 }
 
-// 파싱될 문자열의 할당크기를 파악하는 기능을 하는 함수. 
+// 파싱될 문자열의 할당크기를 파악하는 기능을 하는 함수.
 // str은 split처리된 문자열을 받습니다.
 int get_parse_size(char *str, char **envp)
 {
-	int	index;  //index는 파싱 전 문자열의 인덱스를 의미합니다. 
+	int	index;  //index는 파싱 전 문자열의 인덱스를 의미합니다.
 	int size;	//size는 파싱 후 할당해야할 문자열의 크기.
 
 	size = 0;
 	index = -1;
-	while (str[++index]) //따옴표와 변수를 처리하면서 지나가는 index를 반영하기 위해 각 함수들이 인덱스를 반환합니다.  
+	while (str[++index]) //따옴표와 변수를 처리하면서 지나가는 index를 반영하기 위해 각 함수들이 인덱스를 반환합니다.
 	{
 		if (str[index] == '\'' && unclosed_quote(&str[index], '\''))
 			index += s_quote_cnt(&str[index], &size);

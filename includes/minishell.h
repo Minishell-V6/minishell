@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 19:30:34 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/01 19:54:46 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define STDIN 			0
 # define STDOUT 		1
 # define STDERR 		2
+
+extern int g_exit_status;
 
 void				parse(t_cmd **cmd_list, char *line, char **envp);
 t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
