@@ -6,14 +6,14 @@
 /*   By: hoylee <hoylee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:37:25 by hoylee            #+#    #+#             */
-/*   Updated: 2021/07/01 17:33:35 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/07/01 22:31:00 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int		ft_cd(t_cmd *cmd_list)
-{
+{ 
 	int i;
 	char *pst_buffer;	
 
