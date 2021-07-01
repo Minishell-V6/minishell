@@ -6,7 +6,7 @@
 #    By: mac <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/03 14:22:20 by mac               #+#    #+#              #
-#    Updated: 2021/06/30 21:00:11 by djeon            ###   ########.fr        #
+#    Updated: 2021/07/01 21:42:59 by sejpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c \
 	  ft_substr.c ft_strtrim.c ft_strjoin.c ft_split.c ft_itoa.c ft_strmapi.c \
 	  ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c \
 	  ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-	  ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_strjoin.c
+	  ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJECTS = $(SRC:.c=.o)
 
