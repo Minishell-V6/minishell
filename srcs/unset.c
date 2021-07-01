@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/01 13:28:25 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/01 21:07:48 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void ft_unset(t_cmd *cmd_list, char **envp)
 	int i;
 	int tgt_idx;
 
-	i = 0;
-	while (cmd_list->cmdline[i].cmd)
+	i = 1;
+	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 	{
 		tgt_idx = ft_find_envkey(cmd_list->cmdline[i].cmd, envp);
 		if (tgt_idx > -1)
