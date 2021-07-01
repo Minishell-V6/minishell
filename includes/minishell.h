@@ -6,15 +6,13 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 17:46:00 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/30 20:57:27 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
-# include "alloc_token.h"
 # include <stdlib.h>
 # include <errno.h>
 # include <stdio.h>
@@ -24,31 +22,14 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include "../libft/libft.h"
+# include "structs.h"
+# include "alloc_token.h"
+# include "unset.h"
 
 # define STDIN 			0
 # define STDOUT 		1
 # define STDERR 		2
-
-typedef struct	s_err
-{
-	int				errcode;
-	int				errindex;
-}				t_err;
-
-typedef struct	s_cmd
-{
-	t_token			*cmdline;
-	int				pipe_flag;
-	int				exit_flag;
-	char			quote;
-	char			*(redirect_filename[4]);
-	//index 0 : left redirect char (<, <<);
-	//index 1 : left redirect filename;
-	//index 2 : righ redirect char (>, >>);
-	//index 3 : righ redirect filename;
-	struct s_err	*err_manage;
-	struct s_cmd	*next;
-}				t_cmd;
 
 void				parse(t_cmd **cmd_list, char *line, char **envp);
 t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
