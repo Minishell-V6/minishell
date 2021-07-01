@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 21:42:57 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/29 16:48:59 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/01 20:14:30 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,19 @@ int		alloc_env(char *src, char **dest, char **envp)
 	char *key;
 	char *env_val;
 	int env_len;
+	char *status;
 
 	src_idx = 0;
+
+	if (src[1] == '?')
+	{
+		status = ft_itoa(g_exit_status);
+		ft_memcpy(*dest, status, ft_strlen(status));
+		*dest += ft_strlen(status);
+		// ft_strlcpy(dest, status, ft_strlen(status));
+		free(status);
+		return (1);
+	}
 	// $가 문자열 끝에 오거나 닫는 쌍따옴표 앞에 오는 경우는 문자로 처리합니다.
 	if (src[1] == '\0' || src[1] == '\"')
 	{
