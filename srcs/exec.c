@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:58:40 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 17:27:25 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 
 	i = -1;
 	flag = 0;
-	if (!(buf = (struct stat*)malloc(sizeof(buf))))
+	if (!(buf = (struct stat*)malloc(sizeof(struct stat))))
 		return (-1);
 	if ((env_path = get_env_value("PATH", envp)) == NULL)
 		return (-1);
@@ -86,8 +86,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int fd;
 
-	if (redirect_check(cmd_list) == 1)
-		redirect(cmd_list, &fds);
+	if (redirect_check(cmd_list, &fds) == -1)
+		return -1;
 	if (cmd_list->pipe_flag == 1)
 		fd = fds[1];
 	else

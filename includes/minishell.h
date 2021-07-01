@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:57:56 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 15:58:36 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
 void				set_signal(void);
 
 //redirect
-void				redirect(t_cmd *cmd_list, int **fds);
-int					redirect_check(t_cmd *cmd_list);
+int					redirect(t_cmd *cmd_list, int **fds, int *last_index);
+int					redirect_check(t_cmd *cmd_list, int **fds);
+int					check_fd_error(t_cmd *cmd_list, int errorcode, int error_index, int fd);
 #endif
