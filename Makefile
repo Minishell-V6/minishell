@@ -34,7 +34,7 @@ SRC 		= srcs/minishell.c srcs/utils.c srcs/parse.c srcs/exec.c \
 			  srcs/signal_handle.c srcs/alloc_token.c srcs/cmd_split.c \
 			  srcs/get_parse_size.c srcs/redir_chk.c srcs/ft_getenv.c \
 			  srcs/redirect.c srcs/redirect_check.c \
-			  srcs/ft_echo.c
+			  srcs/ft_echo.c srcs/unset.c
 
 OBJ_DIR 	= objs
 OBJ 		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

@@ -22,11 +22,7 @@ void	handle_signal(int signo)
 		rl_redisplay();//실행
 		}
 		else
-		{ //줄바꿈만 해줌
-			rl_on_new_line();
-			rl_redisplay();// 입력받은 것 다시 출력
 			ft_putstr_fd("\n",STDOUT);//다시출력해서 커서가 글자의 끝에 있음.
-		}
 	}
 	else if(signo == SIGQUIT)
 	{
@@ -37,12 +33,7 @@ void	handle_signal(int signo)
 		ft_putstr_fd("  \b\b",STDOUT);
 		}
 		else
-		{
-			rl_on_new_line();
-			rl_redisplay();// 입력받은 것 다시 출력
 			ft_putstr_fd("Quit: 3\n",STDOUT);//다시출력해서 커서가 글자의 끝에 있음.
-			// 여기서 미니쉘 종료해야함.
-		}
 	}
 }
 
