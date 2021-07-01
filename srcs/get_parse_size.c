@@ -12,6 +12,20 @@
 
 #include "../includes/get_parse_size.h"
 
+//안닫힌 따옴표 체크함수.
+int		unclosed_quote(char *str, char quote)
+{
+	int	index;
+
+	index = 1;
+	while (str[index] && str[index] != quote) 
+		index++;
+	if (str[index] == '\0') //안닫힌 경우, str[index]는 null문자가 나옴.
+		return (0);
+	return (1);
+}
+
+
 // 환경변수에서 Value의 길이를 반환하는 함수입니다.
 int		env_value_size(char *str, int size, char **envp)
 {
@@ -69,7 +83,7 @@ int		env_cnt(char *str, int *size, char **envp)
 
 
 //쌍따옴표 처리 함수입니다.
-int		d_quote_cnt(char *str, int *size, int *flag, char **envp)
+int		d_quote_cnt(char *str, int *size, char **envp)
 {
 	int index;
 
@@ -86,14 +100,11 @@ int		d_quote_cnt(char *str, int *size, int *flag, char **envp)
 			(*size)++;
 		}
 	}
-	// 안닫힌 쌍따옴표 플래그처리
-	if (str[index] == '\0')
-		*flag = 1;
 	return (index);
 }
 
 // 따옴표 처리 함수입니다. 
-int		s_quote_cnt(char *str, int *size, int *flag)
+int		s_quote_cnt(char *str, int *size)
 {
 	int index;
 
@@ -103,10 +114,6 @@ int		s_quote_cnt(char *str, int *size, int *flag)
 		index++;
 		(*size)++;
 	}
-
-	// 안닫힌 따옴표 플래그 처리
-	if (str[index] == '\0')
-		*flag = 1;
 	return (index);
 }
 
@@ -116,21 +123,19 @@ int get_parse_size(char *str, char **envp)
 {
 	int	index;  //index는 파싱 전 문자열의 인덱스를 의미합니다. 
 	int size;	//size는 파싱 후 할당해야할 문자열의 크기.
-	int flag;	//닫히지 않은 따옴표 체크 플래그.
 
-	flag = 0;
 	size = 0;
 	index = -1;
 	while (str[++index]) //따옴표와 변수를 처리하면서 지나가는 index를 반영하기 위해 각 함수들이 인덱스를 반환합니다.  
 	{
-		if (str[index] == '\'')
-			index += s_quote_cnt(&str[index], &size, &flag);
-		else if (str[index] == '\"')
-			index += d_quote_cnt(&str[index], &size, &flag, envp);
+		if (str[index] == '\'' && unclosed_quote(&str[index], '\''))
+			index += s_quote_cnt(&str[index], &size);
+		else if (str[index] == '\"' && unclosed_quote(&str[index], '\"'))
+			index += d_quote_cnt(&str[index], &size, envp);
 		else if (str[index] == '$')
 			index += env_cnt(&str[index], &size, envp);
 		else if (str[index])
 			size++;
 	}
-	return (flag == 1 ? -1 : size); //flag가 1이면 안닫힌 따옴표 에러를 의미.
+	return (size); //flag가 1이면 안닫힌 따옴표 에러를 의미.
 }
