@@ -6,11 +6,37 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/29 21:18:34 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/06/30 20:58:01 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char		*strjoin_path(char const *s1, char const *s2)
+{
+	char	*tmp1;
+	char	*tmp2;
+	char	*result;
+	int		i;
+	int		j;
+
+	tmp1 = (char*)s1;
+	tmp2 = (char*)s2;
+	i = 0;
+	j = 0;
+	if (!(result = (char*)malloc(ft_strlen(tmp1) + ft_strlen(tmp2) + 1)))
+		return (0);
+	while (tmp1[i] != '\0')
+	{
+		result[i] = tmp1[i];
+		i++;
+	}
+	result[i++] = '/';
+	while (tmp2[j] != '\0')
+		result[i++] = tmp2[j++];
+	result[i] = '\0';
+	return (result);
+}
 
 void			free_structure(t_cmd *cmd_list)
 {
@@ -24,7 +50,28 @@ void			free_structure(t_cmd *cmd_list)
 	free(cmd_list);
 }
 
-t_cmd			*ft_new(char *line, int pipe_flag, char quote, int exit_flag)
+// t_cmd			*ft_new(char *line, int pipe_flag, char quote, int exit_flag)
+// {
+// 	t_cmd		*result;
+
+// 	if (!(result = (t_cmd*)malloc(sizeof(t_cmd))))
+// 		return (NULL);
+// 	if (!(result->err_manage = malloc(sizeof(t_err))))
+// 		return (NULL);
+// 	result->cmdline = cmd_split(line, ' ');
+// 	result->pipe_flag = pipe_flag;
+// 	if (exit_flag == 0 && pipe_flag == 0)
+// 		result->exit_flag = 1;
+// 	else
+// 		result->exit_flag = 0;
+// 	result->quote = quote;
+// 	result->err_manage->errcode = 0;
+// 	result->err_manage->errindex = 0;
+// 	result->next = NULL;
+// 	return (result);
+// }
+
+t_cmd			*ft_new(char *line, int pipe_flag, char **envp, int exit_flag)
 {
 	t_cmd		*result;
 
@@ -33,12 +80,12 @@ t_cmd			*ft_new(char *line, int pipe_flag, char quote, int exit_flag)
 	if (!(result->err_manage = malloc(sizeof(t_err))))
 		return (NULL);
 	result->cmdline = cmd_split(line, ' ');
+	ft_alloc_token(result->cmdline, envp);
 	result->pipe_flag = pipe_flag;
 	if (exit_flag == 0 && pipe_flag == 0)
 		result->exit_flag = 1;
 	else
 		result->exit_flag = 0;
-	result->quote = quote;
 	result->err_manage->errcode = 0;
 	result->err_manage->errindex = 0;
 	result->next = NULL;
