@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:57:56 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 17:46:00 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ t_cmd				*ft_new(char *line, int pipe_flag, char **envp, int exit_flag);
 char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
 char				*strjoin_path(char const *s1, char const *s2);
+int					check_whitespace(char *line);
 void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
 int					ft_cd(t_cmd *cmd_list);
 int					ft_exit(t_cmd *cmd_list);
 int					ft_pwd(int fd);
 void				print_errstr(t_cmd *cmd_list);
 //void				free_all(t_cmd *cmd_list);
-void				free_structure(t_cmd *cmd_list);
+void				free_list(t_cmd *cmd_list);
 
 // env
 void				ft_env(char **envp, int fd);
