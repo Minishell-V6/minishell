@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:58:40 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 20:16:52 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 
 	i = -1;
 	flag = 0;
-	if (!(buf = (struct stat*)malloc(sizeof(buf))))
+	if (!(buf = (struct stat*)malloc(sizeof(struct stat))))
 		return (-1);
 	if ((env_path = get_env_value("PATH", envp)) == NULL)
 		return (-1);
