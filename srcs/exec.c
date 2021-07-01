@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 18:18:46 by djeon            ###   ########.fr       */
+/*   Updated: 2021/06/30 22:00:38 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	i = -1;
 	flag = 0;
 	if (!(buf = (struct stat*)malloc(sizeof(struct stat))))
+		return (-1);
+	if ((env_path = get_env_value("PATH", envp)) == NULL)
 		return (-1);
 	if (stat(cmd_list->cmdline[0].cmd, buf) == 0)
 	{
