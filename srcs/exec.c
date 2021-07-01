@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 21:08:16 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:29:05 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 		ft_env(*envp, fd);
 	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		ft_export(cmd_list, envp, fd);
+	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
+		ft_echo(cmd_list);
 	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
 		ft_unset(cmd_list, *envp);
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0) // 위의 해당하는 명령어가 아닐경우, non_built 함수에서 입력된 명령어가 유효한 명령어인지 최종적으로 확인합니다. 유효한 명령어일 경우, 내장된 프로그램이 실행되고 아닐경우, 오류가 출력됩니다.

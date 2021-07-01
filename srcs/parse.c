@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 14:57:25 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 18:04:06 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 19:25:55 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void			parse(t_cmd **cmd_list, char *line, char **envp)
 			if (line[i] == '|')
 				line[i] = '\0'; // 파이프문자를 null로 바꾸어 split을 용이하게 합니다.
 			else
-				pipe_flag = 0; // 파이프가 아니라 null을 만났을 경우, 마지막 노드이므로 파이프처리를 할 필요가 없기 때문에 pipe_flag를 설정하지 않습니다.
-			new = ft_new(&line[start], pipe_flag, 0, start); // list의 노드를 생성합니다.
-			ft_alloc_token(new->cmdline, envp);
-			if (start == 0) // list의 처음 노드를 가리키는 조건입니다. start 변수는 split할 명령어의 첫번째 index를 가리킬 것입니다. 처음 노드일 경우, list가 없는 상태이기 때문에 next로 연결해주는 것이 아닌, 생성된 구조체를 cmd_list에 바로 넣어줍니다. 그리고 반환을 위해 tmp에 backup해둡니다.
+				pipe_flag = 0;
+			new = ft_new(&line[start], pipe_flag, envp, start);
+			if (start == 0)
 			{
 				*cmd_list = new;
 				tmp = *cmd_list;

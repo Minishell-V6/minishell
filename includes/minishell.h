@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:57:27 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/01 19:30:34 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int					ft_exit(t_cmd *cmd_list);
 int					ft_pwd(int fd);
 void				print_errstr(t_cmd *cmd_list);
 //void				free_all(t_cmd *cmd_list);
+void        		ft_echo(t_cmd *cmd_list);
 void				free_list(t_cmd *cmd_list);
 
 // env
