@@ -48,6 +48,7 @@ void			print_export(char **envp, int fd)
 		ft_putstr_fd("declare -x ", fd);
 		print_quote(sorted[i], fd);
 		ft_putchar_fd('\n', fd);
+		free(sorted[i]);
 		i++;
 	}
 	free(sorted);
@@ -79,7 +80,7 @@ int				check_key(char **envp, char *line)
 	return (-1);
 }
 
-int				add_envp(t_cmd *cmd_list, char ***envp)
+int				add_envp(char *cmd, char ***envp)
 {
 	char		**new;
 	int			row;
@@ -92,41 +93,44 @@ int				add_envp(t_cmd *cmd_list, char ***envp)
 	while ((*envp)[i])
 	{
 		new[i] = ft_strdup((*envp)[i]);
+		free((*envp)[i]);
 		i++;
 	}
-	new[i] = ft_strdup(cmd_list->cmdline[1].cmd);
-	new[++i] = NULL;
-	printf("free-envp\n");
 	free(*envp);
+	new[i] = ft_strdup(cmd);
+	new[++i] = NULL;
 	*envp = new;
-	printf("free-envp\n");
 	return (1);
 }
 
-void			ft_export(t_cmd *cmd_list, char ***envp, int fd)
+int			ft_export(t_cmd *cmd_list, char ***envp, int fd)
 {
 	int			i;
 	int 		keyindex;
 
-	i = 0;
+	i = 1;
 	if (cmd_list->cmdline[1].cmd)
 	{
-		if (isvalid_export(cmd_list->cmdline[1].cmd))
+		while(cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 		{
-			if ((keyindex = check_key(*envp, cmd_list->cmdline[1].cmd)) >= 0)
+			if (isvalid_export(cmd_list->cmdline[i].cmd))
 			{
-				if (haveequal(cmd_list->cmdline[1].cmd))
-					add_key_envp(envp, cmd_list, keyindex);
+				if ((keyindex = check_key(*envp, cmd_list->cmdline[i].cmd)) >= 0)
+				{
+					if (haveequal(cmd_list->cmdline[i].cmd))
+						add_key_envp(envp, cmd_list->cmdline[i].cmd, keyindex);
+				}
+				else
+					add_envp(cmd_list->cmdline[i].cmd, envp);
 			}
 			else
-				add_envp(cmd_list, envp);
-		}
-		else
-		{
-			cmd_list->err_manage.errcode = 5;
-			print_errstr(cmd_list);
+				cmd_list->err_manage.errcode = 5;
+			i++;
 		}
 	}
 	else
 		print_export(*envp, fd);
+	if (cmd_list->err_manage.errcode == 5)
+		return (-1);
+	return (1);
 }
