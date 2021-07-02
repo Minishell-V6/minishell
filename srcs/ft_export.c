@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/29 21:27:10 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 14:49:11 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			print_export(char **envp, int fd)
 		ft_putstr_fd("declare -x ", fd);
 		print_quote(sorted[i], fd);
 		ft_putchar_fd('\n', fd);
+		free(sorted[i]);
 		i++;
 	}
 	free(sorted);
@@ -92,14 +93,13 @@ int				add_envp(t_cmd *cmd_list, char ***envp)
 	while ((*envp)[i])
 	{
 		new[i] = ft_strdup((*envp)[i]);
+		free((*envp)[i]);
 		i++;
 	}
+	free(*envp);
 	new[i] = ft_strdup(cmd_list->cmdline[1].cmd);
 	new[++i] = NULL;
-	printf("free-envp\n");
-	free(*envp);
 	*envp = new;
-	printf("free-envp\n");
 	return (1);
 }
 
