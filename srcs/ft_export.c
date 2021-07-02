@@ -123,7 +123,7 @@ void			ft_export(t_cmd *cmd_list, char ***envp, int fd)
 		}
 		else
 		{
-			cmd_list->err_manage->errcode = 5;
+			cmd_list->err_manage.errcode = 5;
 			print_errstr(cmd_list);
 		}
 	}

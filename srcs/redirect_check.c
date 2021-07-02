@@ -16,7 +16,7 @@ int		check_fd_error(t_cmd *cmd_list, int errorcode, int error_index, int fd)
 {
 	if (fd <= 0)
 	{
-		cmd_list->err_manage->errcode = errorcode;
+		cmd_list->err_manage.errcode = errorcode;
 		cmd_list->err_manage->errindex = error_index;
 		return -1;
 	}

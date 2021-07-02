@@ -84,7 +84,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	free(buf);
 	if (flag == 0)
 	{
-		cmd_list->err_manage->errcode = 1;
+		cmd_list->err_manage.errcode = 1;
 		return (0);
 	}
 	return (1);

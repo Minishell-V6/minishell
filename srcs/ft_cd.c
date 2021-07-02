@@ -40,7 +40,7 @@ int		ft_cd(t_cmd *cmd_list)
 	if (chdir(cmd_list->cmdline[1].cmd) == -1)
 	{
 		chdir(pst_buffer);
-		cmd_list->err_manage->errcode = 3;
+		cmd_list->err_manage.errcode = 3;
 		cmd_list->err_manage->errindex = 1;
 		return (-1);
 	}

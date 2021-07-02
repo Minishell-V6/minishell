@@ -20,7 +20,7 @@ int				check_digit(t_cmd *cmd_list)
 	while (cmd_list->cmdline[1].cmd[++i] != '\0')
 		if (ft_isdigit(cmd_list->cmdline[1].cmd[i]) == 0)
 		{
-			cmd_list->err_manage->errcode = 4;
+			cmd_list->err_manage.errcode = 4;
 			cmd_list->err_manage->errindex = 1;
 			print_errstr(cmd_list);
 			if (cmd_list->exit_flag == 1)
@@ -41,7 +41,7 @@ int				ft_exit(t_cmd *cmd_list)
 			return (0);
 		if (cmd_list->cmdline[1].cmd != NULL && cmd_list->cmdline[2].cmd != NULL)
 		{
-			cmd_list->err_manage->errcode = 2;
+			cmd_list->err_manage.errcode = 2;
 			return (-1);
 		}
 	}

@@ -80,6 +80,10 @@ int		redirect(t_cmd *cmd_list, int **fds, int *last_index)
 		error_right = right_redirect(cmd_list, last_index);
 	else if (ft_strncmp(">>", cmd_list->redirect_filename[2], 3) == 0)
 		error_right = right_redirect_double(cmd_list, last_index);
-	return ((error_left == -1 || error_right == -1) ? -1 : 0);
+	if (error_left == -1 || error_right == -1)
+		return -1;
+	if (error_right == 1)
+		return 1;
+	return 0;
 }
 
