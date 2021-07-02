@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/01 21:07:48 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:28:05 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,43 @@ void ft_delete_env(int tgt_idx, char **envp)
 	}
 }
 
-void ft_unset(t_cmd *cmd_list, char **envp)
+int	ft_valid_key(char *key)
+{
+	int i;
+
+	i = 0;
+	if (ft_strlen(key) == 0)
+		return (0);
+	while (key[i])
+	{
+		if (ft_isdigit(key[0]))
+			return (0);
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int ft_unset(t_cmd *cmd_list, char **envp)
 {
 	int i;
 	int tgt_idx;
 
 	i = 1;
-	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
+	while (i < cmd_list->len && cmd_list->cmdline[i].redir_flag == 0)
 	{
-		tgt_idx = ft_find_envkey(cmd_list->cmdline[i].cmd, envp);
-		if (tgt_idx > -1)
-			ft_delete_env(tgt_idx, envp);
+		if (ft_valid_key(cmd_list->cmdline[i].cmd))
+		{
+			tgt_idx = ft_find_envkey(cmd_list->cmdline[i].cmd, envp);
+			if (tgt_idx > -1)
+				ft_delete_env(tgt_idx, envp);
+		}
+		else
+			cmd_list->err_manage->errcode = 6;
 		i++;
 	}
+	if (cmd_list->err_manage->errcode == 6)
+		return (-1);
+	return (0);
 }
