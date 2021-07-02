@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 17:39:39 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/30 17:42:40 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 17:31:56 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_cmd
 	//index 1 : left redirect filename;
 	//index 2 : righ redirect char (>, >>);
 	//index 3 : righ redirect filename;
-	struct s_err	*err_manage;
+	struct s_err	err_manage;
 	struct s_cmd	*next;
 }				t_cmd;
 

@@ -6,7 +6,7 @@
 /*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/06/29 21:27:10 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 17:35:37 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void			ft_export(t_cmd *cmd_list, char ***envp, int fd)
 		}
 		else
 		{
-			cmd_list->err_manage->errcode = 5;
+			cmd_list->err_manage.errcode = 5;
 			print_errstr(cmd_list);
 		}
 	}
