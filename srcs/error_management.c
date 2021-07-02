@@ -51,31 +51,31 @@ void			ft_print_unset_err(t_cmd *cmd_list)
 
 void			print_errstr(t_cmd *cmd_list)
 {
-	if (cmd_list->err_manage->errcode == 1)
+	if (cmd_list->err_manage.errcode == 1)
 	{
 		error_write("minishell: %s: command not found\n" ,cmd_list->cmdline[0].cmd, 0); //status = 127
 		g_exit_status = 127;
 
 	}
-	else if (cmd_list->err_manage->errcode == 2)
+	else if (cmd_list->err_manage.errcode == 2)
 	{
 		error_write("minishell: %s: too many arguments\n", cmd_list->cmdline[0].cmd, 0); //status = 1
 		g_exit_status = 1;
 
 	}
-	else if (cmd_list->err_manage->errcode == 3)
+	else if (cmd_list->err_manage.errcode == 3)
 	{
-		error_write("minishell: %s: No such file or directory\n", cmd_list->cmdline[cmd_list->err_manage->errindex].cmd, 0); //status = 1
+		error_write("minishell: %s: No such file or directory\n", cmd_list->cmdline[cmd_list->err_manage.errindex].cmd, 0); //status = 1
 		g_exit_status = 1;
 
 	}
-	else if (cmd_list->err_manage->errcode == 4)
+	else if (cmd_list->err_manage.errcode == 4)
 	{
-		error_write("minishell: %s: %s: numeric argument required\n" ,cmd_list->cmdline[0].cmd, cmd_list->cmdline[cmd_list->err_manage->errindex].cmd); // status = 255
+		error_write("minishell: %s: %s: numeric argument required\n" ,cmd_list->cmdline[0].cmd, cmd_list->cmdline[cmd_list->err_manage.errindex].cmd); // status = 255
 		g_exit_status = 255;
 
 	}
-	else if (cmd_list->err_manage->errcode == 5)
+	else if (cmd_list->err_manage.errcode == 5)
 	{
 		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0].cmd, ft_split(cmd_list->cmdline[1].cmd, '=')[0]); //status = 1
 		g_exit_status = 1;

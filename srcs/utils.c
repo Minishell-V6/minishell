@@ -65,14 +65,12 @@ void			free_list(t_cmd *cmd_list)
 		while (tmp->cmdline[i].cmd != NULL)
 			free(tmp->cmdline[i++].cmd);
 		free(tmp->cmdline);
-		free(tmp->err_manage);
 		free(tmp);
 	}
 	i = 0;
 	while (cmd_list->cmdline[i].cmd != NULL)
 		free(cmd_list->cmdline[i++].cmd);
 	free(cmd_list->cmdline);
-	free(cmd_list->err_manage);
 	free(cmd_list);
 }
 
@@ -103,8 +101,6 @@ t_cmd			*ft_new(char *line, int pipe_flag, char **envp, int exit_flag)
 
 	if (!(result = (t_cmd*)malloc(sizeof(t_cmd))))
 		return (NULL);
-	if (!(result->err_manage = malloc(sizeof(t_err))))
-		return (NULL);
 	result->cmdline = cmd_split(line, ' ', &(result->len));
 	ft_alloc_token(result->cmdline, envp);
 	result->pipe_flag = pipe_flag;
@@ -112,8 +108,8 @@ t_cmd			*ft_new(char *line, int pipe_flag, char **envp, int exit_flag)
 		result->exit_flag = 1;
 	else
 		result->exit_flag = 0;
-	result->err_manage->errcode = 0;
-	result->err_manage->errindex = 0;
+	result->err_manage.errcode = 0;
+	result->err_manage.errindex = 0;
 	result->next = NULL;
 	return (result);
 }

@@ -37,7 +37,7 @@ typedef struct	s_cmd
 	//index 1 : left redirect filename;
 	//index 2 : righ redirect char (>, >>);
 	//index 3 : righ redirect filename;
-	struct s_err	*err_manage;
+	struct s_err	err_manage;
 	struct s_cmd	*next;
 }				t_cmd;
 
