@@ -145,6 +145,7 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	}
 	else // pid로 자식프로세스의 주소를 반환받는 부모프로세스가 실행되는 조건문입니다.
 	{
+		close(fds[1]);
 		close(fds[0]);
 		wpid = waitpid(pid, &status, 0); // 부모프로세스는 자식프로세스가 종료될때까지 waitpid함수에서 대기하고, 자식프로세스가 종료되어 status에 자식프로세스의 종료상태가 입력되면 waitpid함수는 반환됩니다. 
 		return ;
