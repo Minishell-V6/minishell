@@ -53,12 +53,12 @@ void				ft_env(char **envp, int fd);
 char				**copy_envp(char **envs);
 //export
 void				ft_export(t_cmd *cmd_list, char ***envp, int fd);
-int					add_envp(t_cmd *cmd_list, char ***envp);
+int					add_envp(char *cmd, char ***envp);
 int					isvalid_export(char *line);
 int					cnt_envp_row(char **envp);
 char				**sort_env(char **envp);
 int					haveequal(char *line);
-void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
+void				add_key_envp(char ***envp, char *cmd, int keyindex);
 //signal
 void				set_signal(void);
 

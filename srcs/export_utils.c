@@ -70,8 +70,8 @@ int		haveequal(char *line)
 	return (0);
 }
 
-void	add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex)
+void	add_key_envp(char ***envp, char *cmd, int keyindex)
 {
 	free((*envp)[keyindex]);
-	(*envp)[keyindex] = ft_strdup(cmd_list->cmdline[1].cmd);
+	(*envp)[keyindex] = ft_strdup(cmd);
 }
