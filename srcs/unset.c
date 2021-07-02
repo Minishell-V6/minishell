@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/02 16:08:20 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:28:05 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	ft_valid_key(char *key)
 	int i;
 
 	i = 0;
+	if (ft_strlen(key) == 0)
+		return (0);
 	while (key[i])
 	{
 		if (ft_isdigit(key[0]))
@@ -60,7 +62,7 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 	int tgt_idx;
 
 	i = 1;
-	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
+	while (i < cmd_list->len && cmd_list->cmdline[i].redir_flag == 0)
 	{
 		if (ft_valid_key(cmd_list->cmdline[i].cmd))
 		{

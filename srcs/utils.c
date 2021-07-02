@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 17:47:16 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/02 19:26:17 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_cmd			*ft_new(char *line, int pipe_flag, char **envp, int exit_flag)
 		return (NULL);
 	if (!(result->err_manage = malloc(sizeof(t_err))))
 		return (NULL);
-	result->cmdline = cmd_split(line, ' ');
+	result->cmdline = cmd_split(line, ' ', &(result->len));
 	ft_alloc_token(result->cmdline, envp);
 	result->pipe_flag = pipe_flag;
 	if (exit_flag == 0 && pipe_flag == 0)

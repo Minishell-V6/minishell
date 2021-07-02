@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 15:33:09 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/25 17:41:46 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 19:20:09 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ static void	*ft_free(t_token *result, int len)
 	return (NULL);
 }
 
-t_token	*cmd_split(char const *s, char c)
+t_token	*cmd_split(char const *s, char c, int *t_cmd_len)
 {
 	int		i;
 	int		cursor;
@@ -205,5 +205,6 @@ t_token	*cmd_split(char const *s, char c)
 		}
 	}
 	result[i].cmd = 0;
+	*t_cmd_len = i;
 	return (result);
 }
