@@ -6,11 +6,25 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/06/30 20:58:01 by djeon            ###   ########.fr       */
+/*   Updated: 2021/07/01 17:47:16 by djeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int			check_whitespace(char *line)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != 32 && !(line[i] >= 9 && line[i] <= 13))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 char		*strjoin_path(char const *s1, char const *s2)
 {
@@ -38,10 +52,22 @@ char		*strjoin_path(char const *s1, char const *s2)
 	return (result);
 }
 
-void			free_structure(t_cmd *cmd_list)
+void			free_list(t_cmd *cmd_list)
 {
+	t_cmd		*tmp;
 	int			i;
 
+	while (cmd_list->next != NULL)
+	{
+		i = 0;
+		tmp = cmd_list;
+		cmd_list = cmd_list->next;
+		while (tmp->cmdline[i].cmd != NULL)
+			free(tmp->cmdline[i++].cmd);
+		free(tmp->cmdline);
+		free(tmp->err_manage);
+		free(tmp);
+	}
 	i = 0;
 	while (cmd_list->cmdline[i].cmd != NULL)
 		free(cmd_list->cmdline[i++].cmd);
