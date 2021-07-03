@@ -45,7 +45,7 @@ int					ft_exit(t_cmd *cmd_list);
 int					ft_pwd(int fd);
 void				print_errstr(t_cmd *cmd_list);
 //void				free_all(t_cmd *cmd_list);
-void        		ft_echo(t_cmd *cmd_list);
+int	        		ft_echo(t_cmd *cmd_list);
 void				free_list(t_cmd *cmd_list);
 
 // env

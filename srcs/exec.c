@@ -37,7 +37,10 @@ int				non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, 
 			return (-1);
 	}
 	else if (pid != 0) // 부모프로세스가 실행하는 부분입니다.
+	{
 		wpid = waitpid(pid, &status, 0);
+		g_exit_status = status % 255;
+	}
 	return (0);
 }
 
@@ -113,7 +116,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		ft_export(cmd_list, envp, fd);
 	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
-		ft_echo(cmd_list);
+		return (ft_echo(cmd_list));
 	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
 		return (ft_unset(cmd_list, *envp));
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0) // 위의 해당하는 명령어가 아닐경우, non_built 함수에서 입력된 명령어가 유효한 명령어인지 최종적으로 확인합니다. 유효한 명령어일 경우, 내장된 프로그램이 실행되고 아닐경우, 오류가 출력됩니다.
@@ -130,10 +133,13 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	int			status;
 	pid_t		pid;
 	pid_t		wpid;
+	int			tmp;
 
 	pipe(fds); // 부모프로세스와 자식프로세스간 통신을 위해 pipe를 생성합니다. 크기가 2인 fds배열엔 생성된 pipe의 입출력 fd가 들어갑니다.(입력 : fds[1] == 4, 출력 : fds[0] == 3)
-	if (exec_function(cmd_list, argv, envp, fds) == -1) // 명령어에 맞게 프로그램을 실행합니다.
+	if ((tmp = exec_function(cmd_list, argv, envp, fds)) == -1) // 명령어에 맞게 프로그램을 실행합니다.
 		print_errstr(cmd_list); // 프로그램 실행 도중 오류 발생 시, 오류 메시지를 출력합니다.
+	else if (tmp == 1) //직접 구현한 builtin이 정상적으로 실행된 경우 0으로 초기화.
+		g_exit_status = 0;
 	dup2(100, STDOUT); // redirection 기능이 동작하면 입출력 fd는 입출력 기능이 아닌 다른 file을 가리키게 됩니다. 그래서 main에서 backup해뒀던 표준입출력을 가리키는 fd인 100, 101을 이용하여 표준입출력 fd의 기능을 원상복구 시킵니다.
 	dup2(101, STDIN);
 	if (cmd_list->pipe_flag == 1) // 파이프 처리가 필요할 경우, 자식프로세스를 생성합니다. 파이프 처리가 필요하지 않을경우, 현재 함수를 종료합니다.

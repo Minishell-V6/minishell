@@ -19,7 +19,7 @@ int         n_opt_chk(char *cmd)
 	return (1);
 }
 
-void        ft_echo(t_cmd *cmd_list)
+int        ft_echo(t_cmd *cmd_list)
 {
 	int flg; //-n 옵션에 대한 플래그
 	int i;
@@ -40,4 +40,5 @@ void        ft_echo(t_cmd *cmd_list)
 	}
 	if (flg == 0)
 		write(1, "\n", 1);
+	return (1);
 }

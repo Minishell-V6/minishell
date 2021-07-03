@@ -17,15 +17,21 @@ void			parse(t_cmd **cmd_list, char *line, char **envp)
 	int			i;
 	int			start;
 	int			pipe_flag;
+	int			quote_flag;
 	t_cmd		*tmp;
 	t_cmd		*new;
 
 	i = 0;
 	start = 0;
 	pipe_flag = 1;
+	quote_flag = 0;
 	while (1) // readline으로 입력받은 line을 모두 하나하나 체크하는 loop입니다.
 	{
-		if (line[i] == '\0' || line[i] == '|') // 파이프를 기준으로 명령어를 나누기 위해 설정한 조건문입니다. null을 만날 경우, 이전까지의 명령어를 list의 노드로 생성합니다.
+		if ((line[i] == '\"' || line[i] == '\'') && q_flag == 0) //파이프가 따옴표 안에 들어가는 경우 끊으면 안됨.
+            quote_flag = 1;
+        else if ((line[i] == '\"' || line[i] == '\'') && q_flag == 1)
+            quote_flag = 0;
+		if (line[i] == '\0' || (line[i] == '|' && quote_flag == 0)) // 파이프를 기준으로 명령어를 나누기 위해 설정한 조건문입니다. null을 만날 경우, 이전까지의 명령어를 list의 노드로 생성합니다.
 		{
 			if (line[i] == '|')
 				line[i] = '\0'; // 파이프문자를 null로 바꾸어 split을 용이하게 합니다.
