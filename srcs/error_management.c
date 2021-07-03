@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/03 12:58:48 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 20:02:17 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ void			ft_print_unset_err(t_cmd *cmd_list)
 	}
 }
 
+void			ft_print_export_err(t_cmd *cmd_list)
+{
+	int i;
+
+	i = 1;
+	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
+	{
+		if (isvalid_export(cmd_list->cmdline[i].cmd) == 0)
+			error_write("minishell: %s: `%s': not a valid identifier\n", cmd_list->cmdline[0].cmd, cmd_list->cmdline[i].cmd);
+		i++;
+	}
+}
+
 void			print_errstr(t_cmd *cmd_list)
 {
 	if (cmd_list->err_manage.errcode == 1)
@@ -77,7 +90,7 @@ void			print_errstr(t_cmd *cmd_list)
 	}
 	else if (cmd_list->err_manage.errcode == 5)
 	{
-		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0].cmd, ft_split(cmd_list->cmdline[1].cmd, '=')[0]); //status = 1
+		ft_print_export_err(cmd_list);
 		g_exit_status = 1;
 	}
 	else if (cmd_list->err_manage.errcode == 6)

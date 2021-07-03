@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 15:58:36 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/07/03 17:12:35 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void        		ft_echo(t_cmd *cmd_list);
 void				free_list(t_cmd *cmd_list);
 
 // env
-void				ft_env(char **envp, int fd);
+int					ft_env(char **envp, int fd);
 char				**copy_envp(char **envs);
 //export
-void				ft_export(t_cmd *cmd_list, char ***envp, int fd);
-int					add_envp(t_cmd *cmd_list, char ***envp);
+int					ft_export(t_cmd *cmd_list, char ***envp, int fd);
+int					add_envp(char *cmd, char ***envp);
 int					isvalid_export(char *line);
 int					cnt_envp_row(char **envp);
 char				**sort_env(char **envp);
 int					haveequal(char *line);
-void				add_key_envp(char ***envp, t_cmd *cmd_list, int keyindex);
+void				add_key_envp(char ***envp, char *cmd, int keyindex);
 //signal
 void				set_signal(void);
 

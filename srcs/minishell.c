@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:52:35 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 20:00:39 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/03 17:10:49 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,8 @@ int				main(int argc, char *argv[], char *envp[])
 		}
 		free(line); // readline으로 할당한 line을 해제시켜줍니다.
 	}
+	ft_putstr_fd("\x1b[1A", STDOUT);
+ 	ft_putstr_fd("\033[12C",STDOUT);
+ 	ft_putstr_fd("exit\n", STDOUT);
 	return (0);
 }

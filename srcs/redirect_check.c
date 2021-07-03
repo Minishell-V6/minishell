@@ -69,7 +69,7 @@ int				redirect_check(t_cmd *cmd_list, int **fds)
 		}
 		i++;
 	}
-	if(cmd_list->redirect_filename[0] || cmd_list->redirect_filename[2] ? 1 : 0)
+	if((cmd_list->redirect_filename[0] || cmd_list->redirect_filename[2]) ? 1 : 0)
 		return (redirect(cmd_list, fds, last_index));
 	else
 		return (0);

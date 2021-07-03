@@ -21,8 +21,10 @@ int		ft_cd(t_cmd *cmd_list)
 	if (cmd_list->cmdline[1].cmd == 0 || cmd_list->cmdline[1].redir_flag == 1)
 	{
 		chdir(getenv("HOME"));
-		return (0);
+		return (1);
 	}
+	if (cmd_list->cmdline[1].cmd[0] == 0)
+		return (1);
 	pst_buffer = getcwd(0, 0);
 	if (cmd_list->cmdline[1].cmd[0] == '~')
 	{
@@ -34,7 +36,7 @@ int		ft_cd(t_cmd *cmd_list)
 		else if(cmd_list->cmdline[1].cmd[1] == 0)
 		{
 			chdir(getenv("HOME"));
-			return (0);
+			return (1);
 		}
 	}
 	if (chdir(cmd_list->cmdline[1].cmd) == -1)
@@ -44,5 +46,5 @@ int		ft_cd(t_cmd *cmd_list)
 		cmd_list->err_manage.errindex = 1;
 		return (-1);
 	}
-	return (0);
+	return (1);
 }
