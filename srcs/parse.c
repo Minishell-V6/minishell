@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 14:57:25 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 19:25:55 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/02 18:28:18 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void			parse(t_cmd **cmd_list, char *line, char **envp)
 				line[i] = '\0'; // 파이프문자를 null로 바꾸어 split을 용이하게 합니다.
 			else
 				pipe_flag = 0;
-			new = ft_new(&line[start], pipe_flag, envp, start);
+			if ((new = ft_new(&line[start], pipe_flag, envp, start)) == 0)
+				return ;
 			if (start == 0)
 			{
 				*cmd_list = new;

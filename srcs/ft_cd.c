@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:37:25 by hoylee            #+#    #+#             */
-/*   Updated: 2021/07/01 22:31:00 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/07/02 17:35:02 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		ft_cd(t_cmd *cmd_list)
 	if (chdir(cmd_list->cmdline[1].cmd) == -1)
 	{
 		chdir(pst_buffer);
-		cmd_list->err_manage->errcode = 3;
-		cmd_list->err_manage->errindex = 1;
+		cmd_list->err_manage.errcode = 3;
+		cmd_list->err_manage.errindex = 1;
 		return (-1);
 	}
 	return (0);
