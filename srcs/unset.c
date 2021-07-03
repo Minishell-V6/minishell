@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/03 13:47:50 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 17:42:10 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 	}
 	if (cmd_list->err_manage.errcode == 6)
 		return (-1);
-	return (0);
+	return (1);
 }
