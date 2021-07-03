@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/02 19:28:05 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 13:47:50 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 	int tgt_idx;
 
 	i = 1;
-	while (i < cmd_list->len && cmd_list->cmdline[i].redir_flag == 0)
+	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 	{
 		if (ft_valid_key(cmd_list->cmdline[i].cmd))
 		{
@@ -71,10 +71,10 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 				ft_delete_env(tgt_idx, envp);
 		}
 		else
-			cmd_list->err_manage->errcode = 6;
+			cmd_list->err_manage.errcode = 6;
 		i++;
 	}
-	if (cmd_list->err_manage->errcode == 6)
+	if (cmd_list->err_manage.errcode == 6)
 		return (-1);
 	return (0);
 }
