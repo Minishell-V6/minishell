@@ -43,7 +43,20 @@ void			ft_print_unset_err(t_cmd *cmd_list)
 	i = 1;
 	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 	{
-		if (ft_valid_key(cmd_list->cmdline[i].cmd) == 0)
+		if (isvalid_export(cmd_list->cmdline[i].cmd) == 0)
+			error_write("minishell: %s: `%s': not a valid identifier\n", cmd_list->cmdline[0].cmd, cmd_list->cmdline[i].cmd);
+		i++;
+	}
+}
+
+void			ft_print_export_err(t_cmd *cmd_list)
+{
+	int i;
+
+	i = 1;
+	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
+	{
+		if (isvalid_export(cmd_list->cmdline[i].cmd) == 0)
 			error_write("minishell: %s: `%s': not a valid identifier\n", cmd_list->cmdline[0].cmd, cmd_list->cmdline[i].cmd);
 		i++;
 	}
@@ -77,10 +90,10 @@ void			print_errstr(t_cmd *cmd_list)
 	}
 	else if (cmd_list->err_manage.errcode == 5)
 	{
-		error_write("minishell: %s: not an identifier : %s\n", cmd_list->cmdline[0].cmd, ft_split(cmd_list->cmdline[1].cmd, '=')[0]); //status = 1
+		ft_print_export_err(cmd_list);
 		g_exit_status = 1;
 	}
-	else if (cmd_list->err_manage->errcode == 6)
+	else if (cmd_list->err_manage.errcode == 6)
 	{
 		ft_print_unset_err(cmd_list);
 		g_exit_status = 1;

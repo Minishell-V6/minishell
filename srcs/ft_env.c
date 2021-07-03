@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void			ft_env(char **envp, int fd)
+int				ft_env(char **envp, int fd)
 {
 	int	i;
 
@@ -26,6 +26,7 @@ void			ft_env(char **envp, int fd)
 		}
 		i++;
 	}
+	return (1);
 }
 
 char			**copy_envp(char **envs)

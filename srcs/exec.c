@@ -109,9 +109,9 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	else if (ft_strncmp("exit", cmd_list->cmdline[0].cmd, 5) == 0)
 		return (ft_exit(cmd_list));
 	else if (ft_strncmp("env", cmd_list->cmdline[0].cmd, 4) == 0)
-		ft_env(*envp, fd);
+		return (ft_env(*envp, fd));
 	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
-		ft_export(cmd_list, envp, fd);
+		return (ft_export(cmd_list, envp, fd));
 	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
 		ft_echo(cmd_list);
 	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
@@ -160,7 +160,7 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 		close(fds[1]);
 		close(fds[0]);
 		close(fds[1]);
-		wpid = waitpid(pid, &status, 0); // 부모프로세스는 자식프로세스가 종료될때까지 waitpid함수에서 대기하고, 자식프로세스가 종료되어 status에 자식프로세스의 종료상태가 입력되면 waitpid함수는 반환됩니다. 
+		wpid = waitpid(pid, &status, 0); // 부모프로세스는 자식프로세스가 종료될때까지 waitpid함수에서 대기하고, 자식프로세스가 종료되어 status에 자식프로세스의 종료상태가 입력되면 waitpid함수는 반환됩니다.
 		return ;
 	}
 }

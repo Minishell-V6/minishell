@@ -71,10 +71,10 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 				ft_delete_env(tgt_idx, envp);
 		}
 		else
-			cmd_list->err_manage->errcode = 6;
+			cmd_list->err_manage.errcode = 6;
 		i++;
 	}
-	if (cmd_list->err_manage->errcode == 6)
+	if (cmd_list->err_manage.errcode == 6)
 		return (-1);
 	return (0);
 }
