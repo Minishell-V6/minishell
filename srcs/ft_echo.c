@@ -19,7 +19,7 @@ int         n_opt_chk(char *cmd)
 	return (1);
 }
 
-int        ft_echo(t_cmd *cmd_list)
+int        ft_echo(t_cmd *cmd_list, int fd)
 {
 	int flg; //-n 옵션에 대한 플래그
 	int i;
@@ -34,11 +34,11 @@ int        ft_echo(t_cmd *cmd_list)
 	}
 	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0) //리다이렉션 제외 출력
 	{
-		ft_putstr_fd(cmd_list->cmdline[i].cmd, 1);
-		write(1, " ", 1);
+		ft_putstr_fd(cmd_list->cmdline[i].cmd, fd);
+		write(fd, " ", 1);
 		i++;
 	}
 	if (flg == 0)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 	return (1);
 }
