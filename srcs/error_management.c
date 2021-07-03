@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/03 16:02:53 by mac              ###   ########.fr       */
+/*   Updated: 2021/07/03 20:02:17 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			ft_print_unset_err(t_cmd *cmd_list)
 	i = 1;
 	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 	{
-		if (isvalid_export(cmd_list->cmdline[i].cmd) == 0)
+		if (ft_valid_key(cmd_list->cmdline[i].cmd) == 0)
 			error_write("minishell: %s: `%s': not a valid identifier\n", cmd_list->cmdline[0].cmd, cmd_list->cmdline[i].cmd);
 		i++;
 	}

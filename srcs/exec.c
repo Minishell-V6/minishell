@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/02 15:55:16 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 14:54:03 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	flag = 0;
 	if (!(buf = (struct stat*)malloc(sizeof(struct stat)))) // stat함수에 쓸 매개변수에 메모리 할당
 		return (0);
-	if (stat(cmd_list->cmdline[0].cmd, buf) == 0) // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
+	if (stat(cmd_list->cmdline[0].cmd, buf) == 0 && cmd_list->cmdline[0].cmd[0] != '\0') // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
 	{
 		if ((non_builtin_exec(cmd_list, argv, envp, cmd_list->cmdline[0].cmd, fds)) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
 			return (0);
@@ -70,7 +70,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 		{
 			if ((tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd)) == 0) // path 뒤에 명령어를 붙입니다. (ex. /bin + / + cat)
 				return (0);
-			if (stat(tmp, buf) == 0) // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
+			if (stat(tmp, buf) == 0 && cmd_list->cmdline[0].cmd[0] != '\0') // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
 			{
 				if (non_builtin_exec(cmd_list, argv, envp, tmp, fds) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
 					return (0);

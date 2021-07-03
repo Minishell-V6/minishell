@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/03 16:03:24 by mac              ###   ########.fr       */
+/*   Updated: 2021/07/03 20:02:35 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 	int tgt_idx;
 
 	i = 1;
-	while (i < cmd_list->len && cmd_list->cmdline[i].redir_flag == 0)
+	while (cmd_list->cmdline[i].cmd && cmd_list->cmdline[i].redir_flag == 0)
 	{
 		if (ft_valid_key(cmd_list->cmdline[i].cmd))
 		{
@@ -76,5 +76,5 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 	}
 	if (cmd_list->err_manage.errcode == 6)
 		return (-1);
-	return (0);
+	return (1);
 }

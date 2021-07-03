@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 17:39:39 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/02 19:15:23 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 13:45:38 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_cmd
 	int				exit_flag;
 	char			quote;
 	char			*(redirect_filename[4]);
-	int				len;
 	//index 0 : left redirect char (<, <<);
 	//index 1 : left redirect filename;
 	//index 2 : righ redirect char (>, >>);
