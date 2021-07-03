@@ -6,7 +6,7 @@
 #    By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/25 19:30:48 by djeon             #+#    #+#              #
-#    Updated: 2021/07/01 20:07:31 by seuyu            ###   ########.fr        #
+#    Updated: 2021/07/02 19:24:34 by sejpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ NAME 			= minishell
 READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
 READLINE_INC	= -I/usr/local/opt/readline/include
 
-# READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-# READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
+#READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+#READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 
 #READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
 #READLINE_INC	= -I/opt/homebrew/opt/readline/include

@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:53 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/01 12:01:53 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/02 15:54:59 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "structs.h"
 # include "../libft/libft.h"
 
-void ft_unset(t_cmd *cmd_list, char **envp);
+int	ft_valid_key(char *key);
+int ft_unset(t_cmd *cmd_list, char **envp);
 
 #endif

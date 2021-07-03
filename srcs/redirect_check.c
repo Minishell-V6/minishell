@@ -6,7 +6,7 @@
 /*   By: hoylee <hoylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:36:51 by hoylee            #+#    #+#             */
-/*   Updated: 2021/07/01 17:37:45 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/07/02 17:36:02 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		check_fd_error(t_cmd *cmd_list, int errorcode, int error_index, int fd)
 	if (fd <= 0)
 	{
 		cmd_list->err_manage.errcode = errorcode;
-		cmd_list->err_manage->errindex = error_index;
+		cmd_list->err_manage.errindex = error_index;
 		return -1;
 	}
 	return 0;

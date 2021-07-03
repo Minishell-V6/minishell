@@ -6,13 +6,13 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/01 17:27:25 by hoylee           ###   ########.fr       */
+/*   Updated: 2021/07/02 15:55:16 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void			non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, int fds[])
+int				non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, int fds[])
 {
 	int			status;
 	pid_t		pid;
@@ -20,23 +20,25 @@ void			non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, 
 	int			i;
 
 	i = 1;
-	argv[0] = path;
-	while (cmd_list->cmdline[i].cmd != NULL && cmd_list->cmdline[i].redir_flag == 0)
+	argv[0] = path; // path는 입력된 명령어에 해당하는 프로그램의 경로입니다.
+	while (cmd_list->cmdline[i].cmd != NULL && cmd_list->cmdline[i].redir_flag == 0) // 인자가 필요한 프로그램의 경우, 인자를 활용해야하므로 argv에 인자 넣는 작업을 거칩니다. while loop의 조건은 cmd가 존재하거나 redirection 기호가 아닐때까지 입니다.
 	{
 		argv[i] = cmd_list->cmdline[i].cmd;
 		i++;
 	}
 	argv[i] = NULL;
-	pid = fork();
-	if (pid == 0)
+	if ((pid = fork()) < -1) // 자식프로세스를 생성합니다.
+		return (-1);
+	if (pid == 0) // 자식프로세스가 실행하는 부분입니다.
 	{
-		if (cmd_list->pipe_flag == 1)
+		if (cmd_list->pipe_flag == 1) // 현재 명령어 뒤에 실행할 명령어가 존재할 경우, 표준출력이 아닌 다음 명령어에 보내주기 위해 dup2함수를 실행합니다.
 			dup2(fds[1], 1);
-		execve(path, argv, envp);
-		exit(0);
+		if (execve(path, argv, envp) == -1) // 자식프로세스는 path에 해당하는 프로그램을 실행시킨 후에 프로세스를 종료시킵니다.
+			return (-1);
 	}
-	else if (pid != 0)
+	else if (pid != 0) // 부모프로세스가 실행하는 부분입니다.
 		wpid = waitpid(pid, &status, 0);
+	return (0);
 }
 
 int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
@@ -50,27 +52,29 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 
 	i = -1;
 	flag = 0;
-	if (!(buf = (struct stat*)malloc(sizeof(struct stat))))
-		return (-1);
-	if ((env_path = get_env_value("PATH", envp)) == NULL)
-		return (-1);
-	if (stat(cmd_list->cmdline[0].cmd, buf) == 0)
+	if (!(buf = (struct stat*)malloc(sizeof(struct stat)))) // stat함수에 쓸 매개변수에 메모리 할당
+		return (0);
+	if (stat(cmd_list->cmdline[0].cmd, buf) == 0) // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
 	{
-		non_builtin_exec(cmd_list, argv, envp, cmd_list->cmdline[0].cmd, fds);
+		if ((non_builtin_exec(cmd_list, argv, envp, cmd_list->cmdline[0].cmd, fds)) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
+			return (0);
 		flag = 1;
 	}
-	else
+	else // 명령어에 경로가 포함되지 않은 순수한 명령어일 경우
 	{
-		if ((env_path = get_env_value("PATH", envp)) == NULL)
-			return (-1);
-		paths = ft_split(env_path, ':');
-		while (paths[++i] != NULL)
+		if ((env_path = get_env_value("PATH", envp)) == NULL) // 환경변수 PATH에 해당하는 값을 가져옵니다.
+			return (0);
+		if ((paths = ft_split(env_path, ':')) == NULL) // PATH에 해당하는 값을 : 문자 기준으로 split 하여 paths 이중포인터 변수에 넣습니다.
+			return (0);
+		while (paths[++i] != NULL) // : 로 분리된 path들을 하나씩 볼겁니다.
 		{
-			tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd);
-			if (stat(tmp, buf) == 0)
+			if ((tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd)) == 0) // path 뒤에 명령어를 붙입니다. (ex. /bin + / + cat)
+				return (0);
+			if (stat(tmp, buf) == 0) // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
 			{
-				non_builtin_exec(cmd_list, argv, envp, tmp, fds);
-				flag = 1;
+				if (non_builtin_exec(cmd_list, argv, envp, tmp, fds) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
+					return (0);
+				flag = 1; // 현재 함수를 어떻게 반환할지 결정하는 flag입니다. flag는 0으로 초기화되어 있고, flag가 0일 경우에 현재 함수는 0을 반환하여 오류를 나타냅니다.
 				free(tmp);
 				break ;
 			}
@@ -83,20 +87,18 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	}
 	free(buf);
 	if (flag == 0)
-	{
-		cmd_list->err_manage.errcode = 1;
 		return (0);
-	}
 	return (1);
 }
 
 int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
-	int fd;
+	int			fd;
+	int			right_flag;
 
-	if (redirect_check(cmd_list, &fds) == -1) // redirect가 필요한 노드일 경우, redirect 함수를 실행합니다.
-		return -1;
-	if (cmd_list->pipe_flag == 1) // pipe_flag가 설정되어 list의 다음 노드가 존재할 경우, 현재 노드의 출력은 표준출력이 아닌 다음 노드로 넘겨줘야 하므로 fd에 파이프의 입력fd를 넣어줍니다. 그렇지 않을경우, 표준출력 fd인 1을 fd에 넣어줍니다.
+	if ((right_flag = redirect_check(cmd_list, &fds)) == -1) // redirect가 필요한 노드일 경우, redirect 함수를 실행합니다.
+		return (-1);
+	if (cmd_list->pipe_flag == 1 && right_flag == 0) // pipe_flag가 설정되어 list의 다음 노드가 존재하고 redirection 출력기호가 없을 때, 현재 노드의 출력은 표준출력이 아닌 다음 노드로 넘겨줘야 하므로 fd에 파이프의 입력fd를 넣어줍니다. 그렇지 않을경우, 표준출력 fd인 1을 fd에 넣어줍니다.
 		fd = fds[1];
 	else
 		fd = 1;
@@ -113,9 +115,12 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
 		ft_echo(cmd_list);
 	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
-		ft_unset(cmd_list, *envp);
+		return (ft_unset(cmd_list, *envp));
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0) // 위의 해당하는 명령어가 아닐경우, non_built 함수에서 입력된 명령어가 유효한 명령어인지 최종적으로 확인합니다. 유효한 명령어일 경우, 내장된 프로그램이 실행되고 아닐경우, 오류가 출력됩니다.
+	{
+		cmd_list->err_manage.errcode = 1;
 		return (-1);
+	}
 	return (0);
 }
 
@@ -132,7 +137,14 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	dup2(100, STDOUT); // redirection 기능이 동작하면 입출력 fd는 입출력 기능이 아닌 다른 file을 가리키게 됩니다. 그래서 main에서 backup해뒀던 표준입출력을 가리키는 fd인 100, 101을 이용하여 표준입출력 fd의 기능을 원상복구 시킵니다.
 	dup2(101, STDIN);
 	if (cmd_list->pipe_flag == 1) // 파이프 처리가 필요할 경우, 자식프로세스를 생성합니다. 파이프 처리가 필요하지 않을경우, 현재 함수를 종료합니다.
-		pid = fork();
+	{
+		if ((pid = fork()) < 0)
+		{
+			cmd_list->err_manage.errcode = 1;
+			print_errstr(cmd_list);
+			return ;
+		}
+	}
 	else
 		return ;
 	if (pid == 0) // pid로 0을 반환받는 자식프로세스가 실행되는 조건문입니다.
@@ -147,6 +159,7 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	{
 		close(fds[1]);
 		close(fds[0]);
+		close(fds[1]);
 		wpid = waitpid(pid, &status, 0); // 부모프로세스는 자식프로세스가 종료될때까지 waitpid함수에서 대기하고, 자식프로세스가 종료되어 status에 자식프로세스의 종료상태가 입력되면 waitpid함수는 반환됩니다. 
 		return ;
 	}
