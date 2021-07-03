@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 16:27:21 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/02 19:28:05 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 15:43:25 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int ft_unset(t_cmd *cmd_list, char **envp)
 				ft_delete_env(tgt_idx, envp);
 		}
 		else
-			cmd_list->err_manage->errcode = 6;
+			cmd_list->err_manage.errcode = 6;
 		i++;
 	}
-	if (cmd_list->err_manage->errcode == 6)
+	if (cmd_list->err_manage.errcode == 6)
 		return (-1);
 	return (0);
 }
