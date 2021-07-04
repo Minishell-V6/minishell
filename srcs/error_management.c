@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/03 20:02:17 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/03 20:50:28 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void			print_errstr(t_cmd *cmd_list)
 	{
 		error_write("minishell: %s: %s: numeric argument required\n" ,cmd_list->cmdline[0].cmd, cmd_list->cmdline[cmd_list->err_manage.errindex].cmd); // status = 255
 		g_exit_status = 255;
-
 	}
 	else if (cmd_list->err_manage.errcode == 5)
 	{
