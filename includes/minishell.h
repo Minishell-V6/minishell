@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:54:23 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/03 20:18:32 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/03 21:11:17 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char				check_quote(char *line);
 int					exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[]);
 char				*strjoin_path(char const *s1, char const *s2);
 int					check_whitespace(char *line);
-void				exec(t_cmd *cmp_list, char *argv[], char **envp[]);
+int					exec(t_cmd *cmp_list, char *argv[], char **envp[]);
 int					ft_cd(t_cmd *cmd_list);
 int					ft_exit(t_cmd *cmd_list);
 int					ft_pwd(int fd);
