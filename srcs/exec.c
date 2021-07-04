@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/04 12:29:18 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/04 19:31:53 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int				non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, 
 	else if (pid != 0) // 부모프로세스가 실행하는 부분입니다.
 	{
 		wpid = waitpid(pid, &status, 0);
-		g_exit_status = status % 255;
+		g_exit_status = status >> 8;
 	}
 	return (0);
 }
@@ -56,27 +56,45 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 	i = -1;
 	flag = 0;
 	if (!(buf = (struct stat*)malloc(sizeof(struct stat)))) // stat함수에 쓸 매개변수에 메모리 할당
+	{
+		free(buf);
 		return (0);
-	if (stat(cmd_list->cmdline[0].cmd, buf) == 0 && cmd_list->cmdline[0].cmd[0] != '\0') // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
+	}
+	if (cmd_list->cmdline[0].cmd[0] != '\0' && stat(cmd_list->cmdline[0].cmd, buf) == 0) // 프롬프트에 입력된 명령어가 상대경로나 절대경로가 포함된 명령어일 경우, stat함수는 0을 반환합니다.
 	{
 		if ((non_builtin_exec(cmd_list, argv, envp, cmd_list->cmdline[0].cmd, fds)) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
+		{
+			free(buf);
 			return (0);
+		}
 		flag = 1;
 	}
 	else // 명령어에 경로가 포함되지 않은 순수한 명령어일 경우
 	{
 		if ((env_path = get_env_value("PATH", envp)) == NULL) // 환경변수 PATH에 해당하는 값을 가져옵니다.
+		{
+			free(buf);
 			return (0);
+		}
 		if ((paths = ft_split(env_path, ':')) == NULL) // PATH에 해당하는 값을 : 문자 기준으로 split 하여 paths 이중포인터 변수에 넣습니다.
+		{
+			free(buf);
 			return (0);
+		}
 		while (paths[++i] != NULL) // : 로 분리된 path들을 하나씩 볼겁니다.
 		{
 			if ((tmp = strjoin_path(paths[i], cmd_list->cmdline[0].cmd)) == 0) // path 뒤에 명령어를 붙입니다. (ex. /bin + / + cat)
+			{
+				free(buf);
 				return (0);
-			if (stat(tmp, buf) == 0 && cmd_list->cmdline[0].cmd[0] != '\0') // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
+			}
+			if (cmd_list->cmdline[0].cmd[0] != '\0' &&  stat(tmp, buf) == 0) // path와 명령어를 붙인 문자열에 해당하는 경로에 파일이 있을 경우, 0을 반환(ex. /bin/cat 경로에 해당하는 cat 파일이 존재하므로 0반환)
 			{
 				if (non_builtin_exec(cmd_list, argv, envp, tmp, fds) == -1) // 명령어에 맞게 프로그램을 동작시킵니다.
+				{
+					free(buf);
 					return (0);
+				}
 				flag = 1; // 현재 함수를 어떻게 반환할지 결정하는 flag입니다. flag는 0으로 초기화되어 있고, flag가 0일 경우에 현재 함수는 0을 반환하여 오류를 나타냅니다.
 				free(tmp);
 				break ;
@@ -88,9 +106,11 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 			free(paths[i]);
 		free(paths);
 	}
-	free(buf);
 	if (flag == 0)
+	{
+		free(buf);
 		return (0);
+	}
 	return (1);
 }
 
@@ -138,7 +158,7 @@ int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 	int			tmp;
 
 	pipe(fds); // 부모프로세스와 자식프로세스간 통신을 위해 pipe를 생성합니다. 크기가 2인 fds배열엔 생성된 pipe의 입출력 fd가 들어갑니다.(입력 : fds[1] == 4, 출력 : fds[0] == 3)
-	if ((tmp = exec_function(cmd_list, argv, envp, fds) == -1)) // 명령어에 맞게 프로그램을 실행합니다.
+	if ((tmp = exec_function(cmd_list, argv, envp, fds)) == -1) // 명령어에 맞게 프로그램을 실행합니다.
 		print_errstr(cmd_list); // 프로그램 실행 도중 오류 발생 시, 오류 메시지를 출력합니다.
 	else if (tmp == 1)
 		g_exit_status = 0;
