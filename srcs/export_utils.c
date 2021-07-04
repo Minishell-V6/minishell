@@ -49,11 +49,21 @@ int		cnt_envp_row(char **envp)
 	return (row);
 }
 
-int		isvalid_export(char *line)
+int     isvalid_export(char *line)
 {
-	if (line[0] >= '0' && line[0] <= '9')
-		return (0);
-	return (1);
+    char **str_arr = ft_split(line, '=');
+    char *key = str_arr[0];
+    int i;
+    int ret;
+    i = 0;
+    ret = ft_valid_key(key);
+    while(str_arr[i])
+    {
+        free(str_arr[i]);
+        i++;
+    }
+    free(str_arr);
+    return (ret);
 }
 
 int		haveequal(char *line)
