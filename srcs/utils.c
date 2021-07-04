@@ -6,7 +6,7 @@
 /*   By: djeon <djeon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 15:01:44 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/03 13:50:37 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/04 19:06:08 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char		*strjoin_path(char const *s1, char const *s2)
 	tmp2 = (char*)s2;
 	i = 0;
 	j = 0;
-	if (!(result = (char*)malloc(ft_strlen(tmp1) + ft_strlen(tmp2) + 1)))
+	if (!(result = (char*)malloc(ft_strlen(tmp1) + ft_strlen(tmp2) + 2)))
 		return (0);
 	while (tmp1[i] != '\0')
 	{
