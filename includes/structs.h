@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 17:39:39 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/03 13:45:38 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/04 12:56:32 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct	s_err
 {
 	int				errcode;
 	int				errindex;
+	char			*errtoken;
 }				t_err;
 
 typedef struct	s_token
