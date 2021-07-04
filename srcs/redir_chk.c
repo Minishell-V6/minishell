@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:00:44 by sejpark           #+#    #+#             */
-/*   Updated: 2021/06/29 16:18:55 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/04 13:01:29 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,33 @@ int redir_chk(char *str)
 		return (1);
 	else
 		return (0);
+}
+
+//char *alloc_unexpected_token(char *str)
+//{
+//	char *result;
+//
+//	if (ft_strncmp(str, "<<<", 3) == 0)
+//	{
+//	
+//	}
+//	
+//	return (result);
+//}
+
+int redir_err_chk(t_cmd *cmd_list)
+{
+	int i;
+
+	i = 0;
+	while (cmd_list->cmdline[i].cmd)
+	{
+		if (cmd_list->cmdline[i].redir_flag == -1)
+		{
+			cmd_list->err_manage.errcode = 7;
+			return (-1);
+		}
+		i++;
+	}
+	return (1);
 }
