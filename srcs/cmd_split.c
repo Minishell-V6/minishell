@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 15:33:09 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/03 13:48:54 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/04 17:09:56 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,14 @@ static int		ft_split_cnt(char const *s, const char c)
 					redir = 0;
 				cnt++;
 			}
-			else if (*s != c && *s == '\'' && (quote == '\'' || quote == '"')
+			else if (*s == '\'' && quote == '\''
+						&& (*(s - 1) == '>' || *(s - 1) == '<'))
+			{
+				if (redir)
+					redir = 0;
+				cnt++;
+			}
+			else if (*s == '"' && quote == '"'
 						&& (*(s - 1) == '>' || *(s - 1) == '<'))
 			{
 				if (redir)
@@ -122,9 +129,6 @@ static int		ft_word_len(char const *s, const char c)
 			else
 				quote = '\'';
 		}
-
-
-
 		if (begin == 0)
 		{
 			if (*s != c)
