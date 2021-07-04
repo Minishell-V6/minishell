@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 21:42:57 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/01 20:14:30 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/04 22:23:17 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		alloc_env(char *src, char **dest, char **envp)
 	{
 		**dest = '$';
 		*dest += 1;
-		return (1);
+		return (0);//index는 이미 ++되어있기 때문에 0이여야한다.
 	}
 	src_idx = get_envkey(src, &key); //env_key_size는 key값의 길이만 반환합니다. 인덱스는 $까지 포함해서 1을 더합니다.
 	env_val = get_env_value(key, envp);
