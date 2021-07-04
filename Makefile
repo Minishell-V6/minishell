@@ -6,11 +6,12 @@
 #    By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/25 19:30:48 by djeon             #+#    #+#              #
-#    Updated: 2021/07/03 20:28:35 by mac              ###   ########.fr        #
+#    Updated: 2021/07/04 15:23:48 by sejpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC 				= gcc
+CC 				= gcc -g -fsanitize=address
+#CC 				= gcc -g -fsanitize=address
 RM				= rm -rf
 CFLAGS 			= -Wall -Wextra -Werror
 NAME 			= minishell
