@@ -118,7 +118,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	else if (ft_strncmp("export", cmd_list->cmdline[0].cmd, 7) == 0)
 		return (ft_export(cmd_list, envp, fd));
 	else if (ft_strncmp("echo", cmd_list->cmdline[0].cmd, 5) == 0)
-		return (ft_echo(cmd_list));
+		return (ft_echo(cmd_list, fd));
 	else if (ft_strncmp("unset", cmd_list->cmdline[0].cmd, 6) == 0)
 		return (ft_unset(cmd_list, *envp));
 	else if (non_builtin(cmd_list, argv, *envp, fds) == 0) // 위의 해당하는 명령어가 아닐경우, non_built 함수에서 입력된 명령어가 유효한 명령어인지 최종적으로 확인합니다. 유효한 명령어일 경우, 내장된 프로그램이 실행되고 아닐경우, 오류가 출력됩니다.
@@ -129,7 +129,7 @@ int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 	return (0);
 }
 
-void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
+int				exec(t_cmd *cmd_list, char *argv[], char **envp[])
 {
 	int			fds[2];
 	int			status;
@@ -150,25 +150,25 @@ void			exec(t_cmd *cmd_list, char *argv[], char **envp[])
 		{
 			cmd_list->err_manage.errcode = 1;
 			print_errstr(cmd_list);
-			return ;
+			return (g_exit_status);
 		}
 	}
 	else
-		return ;
+		return (g_exit_status);
 	if (pid == 0) // pid로 0을 반환받는 자식프로세스가 실행되는 조건문입니다.
 	{
 		dup2(fds[0], 0); // 자식프로세스에서 부모프로세스의 표준출력을 받아야하기 때문에 자식프로세스의 표준입력 fd가 부모프로세스의 표준출력을 받는 파이프의 출력 fd인 fds[0]을 가리키게 합니다.
 		close(fds[0]); // 사용하지 않는 fd는 닫아줍니다.
 		close(fds[1]);
-		exec(cmd_list->next, argv, envp); // 자식프로세스로 실행될 명령어가 동작할 수 있게끔 현재함수를 재귀로 실행시켜줍니다.
-		exit(0); // 명령어의 동작이 끝나면 자식프로세스를 종료시킵니다.
+		g_exit_status = exec(cmd_list->next, argv, envp); // 자식프로세스로 실행될 명령어가 동작할 수 있게끔 현재함수를 재귀로 실행시켜줍니다.
+		exit(g_exit_status); // 명령어의 동작이 끝나면 자식프로세스를 종료시킵니다.
 	}
 	else // pid로 자식프로세스의 주소를 반환받는 부모프로세스가 실행되는 조건문입니다.
 	{
 		close(fds[1]);
 		close(fds[0]);
-		close(fds[1]);
 		wpid = waitpid(pid, &status, 0); // 부모프로세스는 자식프로세스가 종료될때까지 waitpid함수에서 대기하고, 자식프로세스가 종료되어 status에 자식프로세스의 종료상태가 입력되면 waitpid함수는 반환됩니다.
-		return ;
+		g_exit_status = status >> 8;
+		return (g_exit_status);
 	}
 }
