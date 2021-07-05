@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/04 19:31:53 by mac              ###   ########.fr       */
+/*   Updated: 2021/07/05 19:29:43 by hoylee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 		free(buf);
 		return (0);
 	}
+	free(buf);
 	return (1);
 }
 

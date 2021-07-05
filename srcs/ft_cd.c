@@ -12,6 +12,19 @@
 
 #include "../includes/minishell.h"
 
+int		mv_home(void)
+{
+		chdir(getenv("HOME"));
+		return (1);
+}
+
+int		put_err_data(t_cmd *cmd_list, int errcode, int errindex)
+{
+	cmd_list->err_manage.errcode = errcode;
+	cmd_list->err_manage.errindex = errindex;
+	return (-1);
+}
+
 int		ft_cd(t_cmd *cmd_list)
 { 
 	int i;
@@ -19,10 +32,7 @@ int		ft_cd(t_cmd *cmd_list)
 
 	i = 0;
 	if (cmd_list->cmdline[1].cmd == 0 || cmd_list->cmdline[1].redir_flag == 1)
-	{
-		chdir(getenv("HOME"));
-		return (1);
-	}
+		return (mv_home());
 	if (cmd_list->cmdline[1].cmd[0] == 0)
 		return (1);
 	pst_buffer = getcwd(0, 0);
@@ -34,17 +44,12 @@ int		ft_cd(t_cmd *cmd_list)
 			cmd_list -> cmdline[1].cmd = ft_strjoin(getenv("HOME"), cmd_list->cmdline[1].cmd);
 		}
 		else if(cmd_list->cmdline[1].cmd[1] == 0)
-		{
-			chdir(getenv("HOME"));
-			return (1);
-		}
+			return (mv_home());
 	}
 	if (chdir(cmd_list->cmdline[1].cmd) == -1)
 	{
 		chdir(pst_buffer);
-		cmd_list->err_manage.errcode = 3;
-		cmd_list->err_manage.errindex = 1;
-		return (-1);
+		return (put_err_data(cmd_list, 3, 1));
 	}
 	return (1);
 }
