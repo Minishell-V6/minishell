@@ -6,7 +6,7 @@
 /*   By: seojeong <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:33:46 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/04 12:27:42 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/05 12:48:06 by sejpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void			print_errstr(t_cmd *cmd_list)
 	}
 	else if (cmd_list->err_manage.errcode == 7)
 	{
-		error_write("minishell: syntax error near unexpected token \n", cmd_list->cmdline[cmd_list->err_manage.errindex].cmd, 0);
+		error_write("minishell: syntax error near unexpected token `%s'\n", cmd_list->err_manage.errtoken, 0);
 		g_exit_status = 258;
 	}
 }
