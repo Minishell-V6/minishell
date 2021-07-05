@@ -99,7 +99,12 @@ void			print_errstr(t_cmd *cmd_list)
 	}
 	else if (cmd_list->err_manage.errcode == 7)
 	{
-		error_write("minishell: syntax error near unexpected token \n", cmd_list->cmdline[cmd_list->err_manage.errindex].cmd, 0);
+		error_write("minishell: syntax error near unexpected token `%s\'\n", cmd_list->cmdline[cmd_list->err_manage.errindex].cmd, 0);
+		g_exit_status = 258;
+	}
+	else if (cmd_list->err_manage.errcode == 8)
+	{
+		error_write("minishell: syntax error near unexpected token `newline\'\n", cmd_list->cmdline[cmd_list->err_manage.errindex].cmd, 0);
 		g_exit_status = 258;
 	}
 }
