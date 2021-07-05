@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 17:25:19 by seuyu             #+#    #+#             */
-/*   Updated: 2021/07/01 20:11:37 by seuyu            ###   ########.fr       */
+/*   Updated: 2021/07/04 22:23:07 by seuyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		env_cnt(char *str, int *size, char **envp)
 	if (str[1] == '\0' || str[1] == '\"')
 	{
 		*size += 1;
-		return (1);
+		return (0); //index는 이미 ++되어있기 때문에 0이여야한다.
 	}
 	index = env_key_size(str); //env_key_size는 key값의 길이만 반환합니다. 인덱스는 $까지 포함해서 1을 더합니다.
 	*size += env_value_size(str, index, envp);

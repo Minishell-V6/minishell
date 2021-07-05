@@ -47,6 +47,17 @@ int				redirect_check(t_cmd *cmd_list, int **fds)
 		else if (ft_strncmp("<", cmd_list->cmdline[i].cmd, 2) == 0 
 							|| ft_strncmp("<<", cmd_list->cmdline[i].cmd, 3) == 0)
 		{
+			if(cmd_list->cmdline[i + 1].cmd == 0)
+			{
+				cmd_list->err_manage.errcode = 8;
+				return (-1);
+			}
+			else if(cmd_list->cmdline[i + 1].redir_flag == 1)
+			{
+				cmd_list->err_manage.errcode = 7;
+				cmd_list->err_manage.errindex = i + 1;
+				return (-1);
+			}
 			save_filename(cmd_list, i, 0, 1);
 			last_index[0] = i + 1;
 			if (ft_strncmp("<", cmd_list->cmdline[i].cmd, 2) == 0)
@@ -60,9 +71,24 @@ int				redirect_check(t_cmd *cmd_list, int **fds)
 		else if (ft_strncmp(">", cmd_list->cmdline[i].cmd, 2) == 0
 							|| ft_strncmp(">>", cmd_list->cmdline[i].cmd, 3) == 0)
 		{
+			if(cmd_list->cmdline[i + 1].cmd == 0)
+			{
+				cmd_list->err_manage.errcode = 8;
+				return (-1);
+				// dlkrj gkrh dltdjTdma.
+			}
+			else if(cmd_list->cmdline[i + 1].redir_flag == 1)
+			{
+				cmd_list->err_manage.errcode = 7;
+				cmd_list->err_manage.errindex = i + 1;
+				return (-1);
+			}
 			save_filename(cmd_list, i, 2, 3);
 			last_index[1] = i + 1;
-			fd = open(cmd_list->cmdline[i + 1].cmd, O_WRONLY | O_CREAT | O_APPEND, 0744);
+			if(ft_strncmp(">", cmd_list->cmdline[i].cmd, 2) == 0)
+				fd = open(cmd_list->cmdline[i + 1].cmd, O_WRONLY | O_CREAT | O_TRUNC, 0744);
+			else if(ft_strncmp(">>", cmd_list->cmdline[i].cmd, 3) == 0)
+				fd = open(cmd_list->cmdline[i + 1].cmd, O_WRONLY | O_CREAT | O_APPEND, 0744);
 			if(check_fd_error(cmd_list, 3, i + 1, fd) == -1)
 				return (-1);
 			close(fd);
