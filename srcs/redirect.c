@@ -12,19 +12,19 @@
 
 #include "../includes/minishell.h"
 
-int				left_redirect(t_cmd *cmd_list, int *last_index)
+int				left_redirect(t_cmd *cmd_list, int *last_index) // < 리다이렉션
 {
 	int			fd;
 
-	fd = open(cmd_list->redirect_filename[1], O_RDONLY, 0644);
-	if(check_fd_error(cmd_list, 3, last_index[0], fd) == -1)
+	fd = open(cmd_list->redirect_filename[1], O_RDONLY, 0644); // 출력만 하기 때문에 읽기전용.
+	if(check_fd_error(cmd_list, 3, last_index[0], fd) == -1) //fd체크
 		return (-1);
-	dup2(fd, STDIN);
+	dup2(fd, STDIN); //표준입력으로 향하는 것을 fd로 향하게 한다. 
 	close(fd);
 	return (0);
 }
 
-int				left_redirect_double(t_cmd *cmd_list, int **fds)
+int				left_redirect_double(t_cmd *cmd_list, int **fds) // << 리다이렉션
 {
 	char		*line;
 
@@ -33,20 +33,20 @@ int				left_redirect_double(t_cmd *cmd_list, int **fds)
 		ft_putendl_fd(line, (*fds)[1]);
 	}
 	close((*fds)[1]);
-	dup2((*fds)[0], 0);
-	close((*fds)[0]);
-	pipe((*fds));
+	dup2((*fds)[0], 0); //표준입력을 통신입력으로 복제
+	close((*fds)[0]); 
+	pipe((*fds)); //?
 	return (0);
 }
 
-int				right_redirect(t_cmd *cmd_list, int *last_index)
+int				right_redirect(t_cmd *cmd_list, int *last_index) //  >파싱
 {
 	int			fd;
 
 	fd = open(cmd_list->redirect_filename[3], O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if(check_fd_error(cmd_list, 3, last_index[1], fd) == -1)
 		return (-1);
-	dup2(fd, STDOUT);
+	dup2(fd, STDOUT); //표준출력을 향하는 것들을 fd를 향하게함.
 	close(fd);
 	return (1);
 }
@@ -82,7 +82,7 @@ int		redirect(t_cmd *cmd_list, int **fds, int *last_index)
 		error_right = right_redirect_double(cmd_list, last_index);
 	if (error_left == -1 || error_right == -1)
 		return -1;
-	if (error_right == 1)
+	if (error_right == 1) // > 플래그가 있는 경우 표준출력을 바꿔버려서 파이프떄문에 따로 처리해야함.
 		return 1;
 	return 0;
 }
