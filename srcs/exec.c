@@ -6,7 +6,7 @@
 /*   By: seuyu <seuyu@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 18:06:01 by djeon             #+#    #+#             */
-/*   Updated: 2021/07/04 19:31:53 by mac              ###   ########.fr       */
+/*   Updated: 2021/07/07 11:43:14 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				non_builtin_exec(t_cmd *cmd_list, char *argv[], char **envp, char *path, 
 		return (-1);
 	if (pid == 0) // 자식프로세스가 실행하는 부분입니다.
 	{
-		if (cmd_list->pipe_flag == 1) // 현재 명령어 뒤에 실행할 명령어가 존재할 경우, 표준출력이 아닌 다음 명령어에 보내주기 위해 dup2함수를 실행합니다.
+		if (cmd_list->pipe_flag == 1 && cmd_list->right_flag == 0) // 현재 명령어 뒤에 실행할 명령어가 존재할 경우, 표준출력이 아닌 다음 명령어에 보내주기 위해 dup2함수를 실행합니다.
 			dup2(fds[1], 1);
 		if (execve(path, argv, envp) == -1) // 자식프로세스는 path에 해당하는 프로그램을 실행시킨 후에 프로세스를 종료시킵니다.
 			return (-1);
@@ -106,7 +106,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 			free(paths[i]);
 		free(paths);
 	}
-	if (flag == 0)
+	if (flag == 0 && cmd_list->cmdline[0].redir_flag != 1)
 	{
 		free(buf);
 		return (0);
@@ -118,13 +118,13 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 int				exec_function(t_cmd *cmd_list, char *argv[], char **envp[], int fds[])
 {
 	int			fd;
-	int			right_flag;
 
+	cmd_list->right_flag = 0;
 	if (redir_err_chk(cmd_list) == -1)
 		return (-1);
-	if ((right_flag = redirect_check(cmd_list, &fds)) == -1) // redirect가 필요한 노드일 경우, redirect 함수를 실행합니다.
+	if ((cmd_list->right_flag = redirect_check(cmd_list, &fds)) == -1) // redirect가 필요한 노드일 경우, redirect 함수를 실행합니다.
 		return (-1);
-	if (cmd_list->pipe_flag == 1 && right_flag == 0) // pipe_flag가 설정되어 list의 다음 노드가 존재하고 redirection 출력기호가 없을 때, 현재 노드의 출력은 표준출력이 아닌 다음 노드로 넘겨줘야 하므로 fd에 파이프의 입력fd를 넣어줍니다. 그렇지 않을경우, 표준출력 fd인 1을 fd에 넣어줍니다.
+	if (cmd_list->pipe_flag == 1 && cmd_list->right_flag == 0) // pipe_flag가 설정되어 list의 다음 노드가 존재하고 redirection 출력기호가 없을 때, 현재 노드의 출력은 표준출력이 아닌 다음 노드로 넘겨줘야 하므로 fd에 파이프의 입력fd를 넣어줍니다. 그렇지 않을경우, 표준출력 fd인 1을 fd에 넣어줍니다.
 		fd = fds[1];
 	else
 		fd = 1;

@@ -6,7 +6,7 @@
 /*   By: sejpark <sejpark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 17:39:39 by sejpark           #+#    #+#             */
-/*   Updated: 2021/07/04 12:56:32 by sejpark          ###   ########.fr       */
+/*   Updated: 2021/07/07 11:39:55 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_cmd
 	t_token			*cmdline;
 	int				pipe_flag;
 	int				exit_flag;
+	int				right_flag;
 	char			quote;
 	char			*(redirect_filename[4]);
 	//index 0 : left redirect char (<, <<);

@@ -10,17 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC 				= gcc
-#CC 				= gcc -g -fsanitize=address
+#CC 				= gcc
+CC 				= gcc -g -fsanitize=address
 RM				= rm -rf
 CFLAGS 			= -Wall -Wextra -Werror
 NAME 			= minishell
 
-#READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
-#READLINE_INC	= -I/usr/local/opt/readline/include
+READLINE_LIB 	= -lreadline -L/usr/local/opt/readline/lib
+READLINE_INC	= -I/usr/local/opt/readline/include
 
-READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
-READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
+#READLINE_LIB 	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
+#READLINE_INC	= -I /Users/$(USER)/.brew/opt/readline/include
 
 # READLINE_LIB	= -lreadline -L/opt/homebrew/opt/readline/lib
 # READLINE_INC	= -I/opt/homebrew/opt/readline/include
