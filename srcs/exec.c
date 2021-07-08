@@ -111,6 +111,7 @@ int				non_builtin(t_cmd *cmd_list, char *argv[], char **envp, int fds[])
 		free(buf);
 		return (0);
 	}
+	free(buf);
 	return (1);
 }
 
