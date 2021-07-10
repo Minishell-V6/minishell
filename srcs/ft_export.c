@@ -6,7 +6,7 @@
 /*   By: jiylee <jiylee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 14:13:20 by seojeong          #+#    #+#             */
-/*   Updated: 2021/07/02 17:35:37 by mac              ###   ########.fr       */
+/*   Updated: 2021/07/10 16:10:31 by seojeong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void			print_quote(char *str, int fd)
 		while (str[i])
 			i++;
 		write(fd, str, ++i);
-		write(fd, "=", 1);
-		write(fd, "\"\"", 2);
 	}
 }
 
