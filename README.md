@@ -6,10 +6,10 @@
 
 ### 완료본 링크
 >hoylee : https://github.com/hey-chocopie/42_seoul/tree/main/minishell
-sejpark :
-seuyu : 
-seojeong : 
-jiylee : 
+sejpark : 채워주세요...
+seuyu :  채워주세요...
+seojeong : 채워주세요...
+jiylee :  채워주세요...
 djeon : https://github.com/Daewoong-Jeon/minishell
 
 # 프로젝트 소개
