@@ -2,14 +2,19 @@
 
 # 주의 사항.
  > 해당 코드는 기능구현만 완료된 상태입니다. 
- 변수명 수정 및 코드정리는 팀원끼리 각자 진행하였습니다. 
+ 변수명 수정 및 코드정리는 팀원 각자 진행하였습니다. 
 
 ### 완료본 링크
->hoylee : https://github.com/hey-chocopie/42_seoul/tree/main/minishell
-sejpark : 채워주세요...
-seuyu :  채워주세요...
-seojeong : 채워주세요...
-jiylee :  채워주세요...
+hoylee : https://github.com/hey-chocopie/42_seoul/tree/main/minishell
+
+sejpark : https://github.com/sejinpark12
+
+seuyu : https://github.com/seuyu42
+
+seojeong : https://github.com/seoysauce
+
+jiylee : https://github.com/Jiyong95
+
 djeon : https://github.com/Daewoong-Jeon/minishell
 
 # 프로젝트 소개
